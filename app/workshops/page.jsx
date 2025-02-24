@@ -60,6 +60,7 @@
 import Navbar from "@/components/Navbar";
 import { BentoGridHome } from "@/components/WorkshopBento";
 import WorkshopGrid from "@/components/WorkshopGrid";
+import WorkshopGroups from "@/components/WorkshopGroups";
 import { motion } from "framer-motion";
 import { useEffect, useState, useLayoutEffect } from "react";
 
@@ -153,7 +154,7 @@ const Workshops = () => {
         <BentoGridHome shouldAnimate={shouldAnimate} />
       </div>
       <div className="">
-        <WorkshopGrid />
+        <WorkshopGroups />
       </div>
     </div>
   );

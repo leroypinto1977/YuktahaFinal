@@ -108,6 +108,7 @@
 
 "use client";
 
+import EventGroups from "../../components/EventGroups";
 import { BentoGridEventsHome } from "@/components/EventBento";
 import EventGrid from "@/components/EventGrid";
 import Navbar from "@/components/Navbar";
@@ -204,7 +205,7 @@ const Events = () => {
         <BentoGridEventsHome shouldEventsAnimate={shouldEventsAnimate} />
       </div>
       <div className="">
-        <EventGrid />
+        <EventGroups />
       </div>
     </div>
   );

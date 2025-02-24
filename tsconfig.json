@@ -41,7 +41,8 @@
     "components/acertinity_ui/shooting-stars.jsx",
     "lib/utils.js",
     "components/acertinity_ui/select.jsx",
-    "components/acertinity_ui/bento-grid.jsx"
+    "components/acertinity_ui/bento-grid.jsx",
+    "components/WorkshopGroups.jsx"
   ],
   "exclude": ["node_modules"]
 }

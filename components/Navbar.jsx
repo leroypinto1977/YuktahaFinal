@@ -60,15 +60,13 @@
 "use client";
 
 import NavbarClient from "./NavbarClient";
-import NavbarTabs from "./NavbarTabs";
+// import NavbarClient from "./NewNavbar";
 // import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import React from "react";
 
 export default function Navbar() {
   const { user, isAuthenticated } = useKindeBrowserClient();
-  // const user = await getUser();
-  // const authenticated = isAuthenticated;
   const authenticated = isAuthenticated;
 
   return <NavbarClient authenticated={authenticated} user={user} />;

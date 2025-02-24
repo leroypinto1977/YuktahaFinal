@@ -20,6 +20,7 @@ const WorkshopSchema = new mongoose.Schema(
     outer_Img: { type: String, required: false }, // Image for promotion
     inner_Img: { type: String, required: false }, // Internal event image
     count: { type: Number, default: 0 }, // Tracks participant count
+    groupId: { type: Number, required: true, default: 0 },
     participants: [
       {
         yuktahaId: { type: String, required: true },

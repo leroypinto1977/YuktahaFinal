@@ -1,5 +1,5 @@
 import { connectToDatabase } from "@/lib/mongodb";
-import { NTEvent } from "@/models/EventDetails";
+// import { NTEvent } from "@/models/EventDetails";
 import { TEvent } from "@/models/EventDetails";
 import { NextResponse } from "next/server";
 
