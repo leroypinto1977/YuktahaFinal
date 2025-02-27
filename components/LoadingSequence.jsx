@@ -605,33 +605,6 @@ const StaggeredCards = () => {
   );
 };
 
-// Footer with scroll reveal animation
-// const AnimatedFooter = () => {
-//   const footerRef = useRef(null);
-//   const { scrollYProgress } = useScroll({
-//     target: footerRef,
-//     offset: ["start end", "end end"],
-//   });
-
-//   const footerOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
-//   const footerY = useTransform(scrollYProgress, [0, 0.5, 1], [100, 0, 0]);
-
-//   return (
-//     <div ref={footerRef} className="h-[100vh] relative">
-//       <div className="sticky bottom-0 w-full">
-//         <motion.div
-//           style={{ opacity: footerOpacity, y: footerY }}
-//           className="w-full"
-//         >
-//           <Footer />
-//         </motion.div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// Footer with scroll reveal animation
-//
 const AnimatedFooter = () => {
   const footerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -789,7 +762,7 @@ const LoadingSequence = ({ children }) => {
         </div>
         <div className="bg-[#3B6790] w-full h-full py-8 xs:py-12 sm:py-16 md:py-32">
           <ScrollBasedSection className="mb-10">
-            <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-left font-semibold font-sofia text-white px-4 xs:px-5 sm:px-6 md:pl-20">
+            <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-left font-semibold font-sofia text-black px-4 xs:px-5 sm:px-6 md:pl-20">
               About Us
             </h2>
           </ScrollBasedSection>
