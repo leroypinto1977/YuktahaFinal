@@ -14,32 +14,40 @@ const WorkshopGroups = () => {
   const [loading, setLoading] = useState(false);
 
   const groups = [
-    { id: 1, name: "AI and Machine Learning", image: "/workshop/tech.png" },
+    {
+      id: 1,
+      name: "AI and Machine Learning",
+      image: "/workshop/groups/1.png",
+    },
     {
       id: 2,
       name: "Software Development and Web Technologies",
-      image: "/workshop/design.png",
+      image: "/workshop/groups/2.png",
     },
     {
       id: 3,
       name: "Cybersecurity & Ethical Hacking",
-      image: "/workshop/business.png",
+      image: "/workshop/groups/3.png",
     },
     {
       id: 4,
       name: "IoT, Embedded Systems & Microcontrollers",
-      image: "/workshop/marketing.png",
+      image: "/workshop/groups/4.png",
     },
-    { id: 5, name: "VLSI & Circuit Design", image: "/workshop/dev.png" },
+    {
+      id: 5,
+      name: "VLSI & Circuit Design",
+      image: "/workshop/groups/5.png",
+    },
     {
       id: 6,
       name: "Renewable energy & Smart Infrastructure",
-      image: "/workshop/creative.png",
+      image: "/workshop/groups/6.png",
     },
     {
       id: 7,
       name: "Civil Engineering & Geographic Data",
-      image: "/workshop/creative.png",
+      image: "/workshop/groups/7.png",
     },
   ];
 

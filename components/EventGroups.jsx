@@ -267,37 +267,37 @@ const EventGroups = () => {
     {
       id: 1,
       name: "Paper Presentations & Research",
-      image: "/events/research.png",
+      image: "/event/groups/1.png",
     },
     {
       id: 2,
       name: "AI & Data Science Challenges",
-      image: "/events/ai.png",
+      image: "/event/groups/2.png",
     },
     {
       id: 3,
       name: "Coding Challenges",
-      image: "/events/coding.png",
+      image: "/event/groups/3.png",
     },
     {
       id: 4,
       name: "Circuit Design & Embedded Systems",
-      image: "/events/circuit.png",
+      image: "/event/groups/4.png",
     },
     {
       id: 5,
       name: "Engineering Challenges",
-      image: "/workshop/main.png",
+      image: "/event/groups/5.png",
     },
     {
       id: 6,
       name: "Escape Room Challenges",
-      image: "/events/escape.png",
+      image: "/event/groups/6.png",
     },
     {
       id: 7,
       name: "Civil",
-      image: "/events/civil.png",
+      image: "/event/groups/7.png",
     },
   ];
 

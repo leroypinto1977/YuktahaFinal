@@ -9,7 +9,7 @@ import { HeroUIProvider } from "@heroui/react";
 // const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Ideathon Platform",
+  title: "Yuktaha",
   description: "Innovate, Collaborate, Transform",
 };
 

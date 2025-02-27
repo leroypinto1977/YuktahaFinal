@@ -335,9 +335,10 @@ const WorkshopGrid = ({
   }
 
   const workshopsToDisplay = Array.isArray(workshops) ? workshops : [];
-  const filteredWorkshops = workshopsToDisplay.filter(
-    (workshop) => workshop.open
-  );
+  // const filteredWorkshops = workshopsToDisplay.filter(
+  //   (workshop) => workshop.open
+  // );
+  const filteredWorkshops = workshopsToDisplay;
 
   const getGridClass = (itemCount) => {
     switch (itemCount) {
@@ -384,7 +385,7 @@ const WorkshopGrid = ({
             transition={{ duration: 0.6, delay: index * 0.1 }}
             viewport={{ once: true }}
             whileHover={{ scale: 1 }}
-            className="w-full"
+            className="w-full pt-4"
           >
             <Card className="bg-zinc-900 border-zinc-800 h-full border-3 rounded-3xl hover:border-zinc-700 transition-all duration-300 overflow-hidden">
               <CardHeader className="p-0">

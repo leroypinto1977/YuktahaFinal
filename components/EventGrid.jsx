@@ -449,7 +449,8 @@ const EventGrid = ({
     return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-[90rem] mx-auto";
   };
 
-  const filteredEvents = events.filter((event) => event.open);
+  // const filteredEvents = events.filter((event) => event.open);
+  const filteredEvents = events;
 
   return (
     <section
