@@ -605,7 +605,7 @@ const items = [
     header: () => (
       <div className="flex items-center justify-center w-full h-full min-h-[6rem] rounded-xl overflow-hidden border-0">
         <Image
-          src="/events/main.png"
+          src="/event/main.png"
           alt="Main Logo"
           width={400}
           height={200}
