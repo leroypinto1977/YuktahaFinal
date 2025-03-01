@@ -36,7 +36,7 @@ export function BackgroundGradientCard({
   return (
     <div className="max-w-sm mx-auto">
       <BackgroundGradient
-        className={`rounded-[22px] max-w-sm p-4 sm:p-10 bg-black ${className}`}
+        className={`rounded-[22px] max-w-sm p-4 sm:p-10 bg-neutral-900 ${className}`}
       >
         <Image
           src={src}

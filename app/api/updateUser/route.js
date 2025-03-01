@@ -64,7 +64,11 @@ export async function POST(req) {
     }
 
     return new Response(
-      JSON.stringify({ message: "User updated successfully", user }),
+      JSON.stringify({
+        message: "User updated successfully",
+        yuktahaId: user.yuktahaId, // Explicitly include yuktahaId in the response
+        user,
+      }),
       {
         status: 200,
         headers: { "Content-Type": "application/json" },

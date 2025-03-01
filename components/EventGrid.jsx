@@ -13,169 +13,6 @@
 // import { useRouter } from "next/navigation";
 // import { useState, useEffect } from "react";
 
-// const EventGrid = () => {
-//   const [activeTab, setActiveTab] = useState("technical");
-//   const [events, setEvents] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     const fetchEvents = async () => {
-//       try {
-//         const response = await fetch(
-//           `/api/${activeTab === "technical" ? "tevents" : "ntevents"}`
-//         );
-//         if (!response.ok) {
-//           throw new Error("Failed to fetch events");
-//         }
-//         const data = await response.json();
-//         setEvents(data);
-//       } catch (err) {
-//         setError(err.message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchEvents();
-//   }, [activeTab]);
-
-//   if (loading) {
-//     return (
-//       <div className="w-full px-4 py-16 bg-black text-white text-center">
-//         Loading events...
-//       </div>
-//     );
-//   }
-
-//   if (error) {
-//     return (
-//       <div className="w-full px-4 py-16 bg-black text-white text-center">
-//         Error: {error}
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <section className="w-full px-4 py-16  bg-gradient-to-br from-neutral-800 to-neutral-900">
-//       <motion.h2
-//         className="text-4xl font-bold text-center text-white mb-12"
-//         initial={{ opacity: 0, y: 20 }}
-//         transition={{ duration: 0.6 }}
-//         whileInView={{ opacity: 1, y: 0 }}
-//         viewport={{ once: true }}
-//       >
-//         {activeTab === "technical"
-//           ? "Technical Events"
-//           : "Non-Technical Events"}
-//       </motion.h2>
-//       <div className="flex justify-center mb-8">
-//         <Button
-//           variant={activeTab === "technical" ? "default" : "secondary"}
-//           onClick={() => setActiveTab("technical")}
-//           className="mx-2"
-//         >
-//           Technical Events
-//         </Button>
-//         <Button
-//           variant={activeTab === "non-technical" ? "default" : "secondary"}
-//           onClick={() => setActiveTab("non-technical")}
-//           className="mx-2"
-//         >
-//           Non-Technical Events
-//         </Button>
-//       </div>
-
-//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-full mx-auto pb-16 px-28">
-//         {events
-//           .filter((event) => event.open)
-//           .map((event, index) => (
-//             <motion.div
-//               key={event.eventid}
-//               initial={{ opacity: 0, y: 20 }}
-//               whileInView={{ opacity: 1, y: 0 }}
-//               viewport={{ once: true }}
-//               transition={{ duration: 0.6, delay: index * 0.2 }}
-//               whileHover={{ scale: 1 }}
-//             >
-//               <Card className="bg-zinc-900 border-zinc-800 h-full border-3 rounded-3xl hover:border-zinc-700 transition-all duration-300 overflow-hidden">
-//                 <CardHeader className="p-0">
-//                   <motion.div
-//                     className="relative w-full rounded-t-xl overflow-hidden pt-4 px-4"
-//                     whileHover={{ scale: 1.2 }}
-//                     transition={{ duration: 0.3 }}
-//                   >
-//                     <Image
-//                       src={event.outer_Img || "/workshop/main.png"}
-//                       alt={event.name}
-//                       width={400}
-//                       height={300}
-//                       className="object-cover aspect-video w-full h-full rounded-t-2xl"
-//                     />
-//                   </motion.div>
-
-//                   <div className="p-6">
-//                     <CardTitle className="text-white">{event.name}</CardTitle>
-//                     <div className="flex gap-2 mt-2">
-//                       <span className="text-xs bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
-//                         {event.dept}
-//                       </span>
-//                     </div>
-//                   </div>
-//                 </CardHeader>
-//                 <CardContent className="px-6 py-0">
-//                   <CardDescription className="text-zinc-400">
-//                     {event.short_desc}
-//                   </CardDescription>
-//                 </CardContent>
-//                 <CardFooter className="flex justify-end">
-//                   <Button
-//                     className="group items-center pt-2 pb-2"
-//                     onClick={() => {
-//                       router.push(
-//                         `/events/${
-//                           activeTab === "technical"
-//                             ? "technical"
-//                             : "non-technical"
-//                         }/${event.eventid}`
-//                       );
-//                     }}
-//                   >
-//                     Register
-//                     <ArrowRight
-//                       className="-me-1 ms-2 opacity-60 transition-transform group-hover:translate-x-0.5"
-//                       size={16}
-//                       strokeWidth={2}
-//                       aria-hidden="true"
-//                     />
-//                   </Button>
-//                 </CardFooter>
-//               </Card>
-//             </motion.div>
-//           ))}
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default EventGrid;
-
-// import { Button } from "@/components/ui/button";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardFooter,
-//   CardTitle,
-// } from "@/components/ui/card";
-// import { motion } from "framer-motion";
-// import { ArrowRight } from "lucide-react";
-// import Image from "next/image";
-// import { useRouter } from "next/navigation";
-// import { useState, useEffect } from "react";
-
 // const EventGrid = ({
 //   events: propEvents,
 //   isModalView = false,
@@ -216,7 +53,7 @@
 //       try {
 //         const response = await fetch(
 //           isModalView
-//             ? `/api/tevents/getGroups/${groupId}`
+//             ? `/api/tevents/${groupId}`
 //             : `/api/${activeTab === "technical" ? "tevents" : "ntevents"}`
 //         );
 //         if (!response.ok) {
@@ -265,10 +102,11 @@
 //           return "grid-cols-3 max-w-6xl mx-auto";
 //       }
 //     }
-//     return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-full mx-auto";
+//     return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-[90rem] mx-auto";
 //   };
 
-//   const filteredEvents = events.filter((event) => event.open);
+//   // const filteredEvents = events.filter((event) => event.open);
+//   const filteredEvents = events;
 
 //   return (
 //     <section
@@ -278,7 +116,7 @@
 //           : ""
 //       }`}
 //     >
-//       <div className={`grid ${getGridClass(filteredEvents.length)} gap-6 px-4`}>
+//       <div className={`grid ${getGridClass(filteredEvents.length)} gap-8`}>
 //         {filteredEvents.map((event, index) => (
 //           <motion.div
 //             key={event.eventid}
@@ -287,24 +125,26 @@
 //             viewport={{ once: true }}
 //             transition={{ duration: 0.6, delay: index * 0.1 }}
 //             whileHover={{ scale: 1 }}
-//             className="w-full"
+//             className="w-full h-full"
 //           >
-//             <Card className="bg-zinc-900 border-zinc-800 h-full border-3 rounded-3xl hover:border-zinc-700 transition-all duration-300 overflow-hidden">
-//               <CardHeader className="p-0">
-//                 <motion.div
-//                   className="relative w-full rounded-t-xl overflow-hidden pt-4 px-4"
-//                   whileHover={{ scale: 1.2 }}
-//                   transition={{ duration: 0.3 }}
-//                 >
-//                   <Image
-//                     src={event.outer_Img || "/events/default.png"}
-//                     alt={event.name}
-//                     width={400}
-//                     height={300}
-//                     className="object-cover aspect-video w-full h-full rounded-t-2xl"
-//                   />
-//                 </motion.div>
-//                 <div className="p-6">
+//             <Card className="bg-zinc-900 border-zinc-800 h-full border-3 rounded-3xl hover:border-zinc-700 transition-all duration-300 overflow-hidden flex flex-col">
+//               <CardHeader className="p-0 flex-grow">
+//                 <div className="relative w-full pt-4 px-4 aspect-video">
+//                   <motion.div
+//                     className="w-full h-full aspect-video rounded-t-2xl overflow-hidden"
+//                     whileHover={{ scale: 1.2 }}
+//                     transition={{ duration: 0.3 }}
+//                   >
+//                     <Image
+//                       src={event.outer_Img || "/events/default.png"}
+//                       alt={event.name}
+//                       width={400}
+//                       height={300}
+//                       className="object-cover w-full h-full"
+//                     />
+//                   </motion.div>
+//                 </div>
+//                 <div className="p-6 flex-grow">
 //                   <CardTitle className="text-white">{event.name}</CardTitle>
 //                   <div className="flex gap-2 mt-2">
 //                     <span className="text-xs bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
@@ -316,9 +156,9 @@
 //                   </CardDescription>
 //                 </div>
 //               </CardHeader>
-//               <CardFooter className="flex justify-end">
+//               <CardFooter className="flex justify-end p-6">
 //                 <Button
-//                   className="group items-center pt-2 pb-2"
+//                   className="group items-center"
 //                   onClick={() => {
 //                     router.push(`/events/${activeTab}/${event.eventid}`);
 //                   }}
@@ -357,6 +197,138 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+// Mobile Event Card Component
+const MobileEventCard = ({ event, index, activeTab, router }) => {
+  return (
+    <motion.div
+      key={event.eventid}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      className="w-full snap-start"
+    >
+      <Card className="bg-zinc-900 border-zinc-800 border-2 rounded-2xl overflow-hidden shadow-lg mx-2 h-full flex flex-col">
+        <CardHeader className="p-0">
+          <div className="relative w-full aspect-video">
+            <Image
+              src={event.outer_Img || "/events/default.png"}
+              alt={event.name}
+              width={300}
+              height={200}
+              className="object-cover w-full h-full"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent" />
+            <div className="absolute bottom-3 left-3">
+              <span className="text-xs bg-zinc-800/90 text-zinc-300 px-2 py-1 rounded-full">
+                {event.dept}
+              </span>
+            </div>
+          </div>
+        </CardHeader>
+        <div className="p-4 flex-grow">
+          <CardTitle className="text-white text-lg mb-2">
+            {event.name}
+          </CardTitle>
+          <CardDescription className="text-zinc-400 line-clamp-2 text-sm">
+            {event.short_desc}
+          </CardDescription>
+        </div>
+        <CardFooter className="flex justify-end p-3 pt-0">
+          <Button
+            size="sm"
+            className="group items-center"
+            onClick={() => {
+              router.push(`/events/${activeTab}/${event.eventid}`);
+            }}
+          >
+            Register
+            <ArrowRight
+              className="-me-1 ms-2 opacity-60 transition-transform group-hover:translate-x-0.5"
+              size={14}
+              strokeWidth={2}
+              aria-hidden="true"
+            />
+          </Button>
+        </CardFooter>
+      </Card>
+    </motion.div>
+  );
+};
+
+// Desktop Event Card Component
+const DesktopEventCard = ({ event, index, activeTab, router }) => {
+  return (
+    <motion.div
+      key={event.eventid}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.7, delay: index * 0.1 }}
+      className="w-full h-full"
+    >
+      <Card className="bg-zinc-900 border-zinc-800 h-full border-3 rounded-3xl hover:border-zinc-700 transition-all duration-300 overflow-hidden flex flex-col shadow-xl hover:shadow-2xl hover:shadow-indigo-900/10">
+        <CardHeader className="p-0 flex-grow">
+          <div className="relative w-full pt-4 px-4 aspect-video">
+            <motion.div
+              className="w-full h-full aspect-video rounded-t-2xl overflow-hidden"
+              whileHover={{ scale: 1.2 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Image
+                src={event.outer_Img || "/events/default.png"}
+                alt={event.name}
+                width={400}
+                height={300}
+                className="object-cover w-full h-full transition-transform duration-700"
+              />
+            </motion.div>
+          </div>
+          <div className="p-6 flex-grow">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
+              <CardTitle className="text-white">{event.name}</CardTitle>
+              <div className="flex gap-2 mt-2">
+                <span className="text-xs bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
+                  {event.dept}
+                </span>
+              </div>
+              <CardDescription className="text-zinc-400 mt-2">
+                {event.short_desc}
+              </CardDescription>
+            </motion.div>
+          </div>
+        </CardHeader>
+        <CardFooter className="flex justify-end p-6">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <Button
+              className="group items-center"
+              onClick={() => {
+                router.push(`/events/${activeTab}/${event.eventid}`);
+              }}
+            >
+              Register
+              <ArrowRight
+                className="-me-1 ms-2 opacity-60 transition-transform group-hover:translate-x-0.5"
+                size={16}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+            </Button>
+          </motion.div>
+        </CardFooter>
+      </Card>
+    </motion.div>
+  );
+};
+
 const EventGrid = ({
   events: propEvents,
   isModalView = false,
@@ -366,7 +338,26 @@ const EventGrid = ({
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
+
+  // Check for mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    if (typeof window !== "undefined") {
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", checkMobile);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (isModalView) {
@@ -375,7 +366,6 @@ const EventGrid = ({
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollPosition}px`;
       document.body.style.width = "100%";
-
       return () => {
         document.body.style.overflow = "";
         document.body.style.position = "";
@@ -392,7 +382,6 @@ const EventGrid = ({
       setLoading(false);
       return;
     }
-
     const fetchEvents = async () => {
       try {
         const response = await fetch(
@@ -411,28 +400,41 @@ const EventGrid = ({
         setLoading(false);
       }
     };
-
     fetchEvents();
   }, [propEvents, groupId, activeTab, isModalView]);
 
   if (loading) {
     return (
-      <div className="w-full px-4 py-16 bg-black text-white text-center">
-        Loading events...
+      <div className="w-full flex items-center justify-center px-4 py-16 bg-gradient-to-br from-neutral-800 to-neutral-900 text-white text-center">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white mb-4"></div>
+          <p>Loading events...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="w-full px-4 py-16 bg-black text-white text-center">
-        Error: {error}
+      <div className="w-full px-4 py-16 bg-gradient-to-br from-neutral-800 to-neutral-900 text-white text-center">
+        <div className="bg-red-900/20 border border-red-800 p-4 rounded-lg max-w-md mx-auto">
+          <p>Error: {error}</p>
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </Button>
+        </div>
       </div>
     );
   }
 
   const getGridClass = (itemCount) => {
     if (isModalView) {
+      if (isMobile) return "grid-cols-1 max-w-sm mx-auto";
+
       switch (itemCount) {
         case 1:
           return "grid-cols-1 max-w-md mx-auto";
@@ -446,78 +448,66 @@ const EventGrid = ({
           return "grid-cols-3 max-w-6xl mx-auto";
       }
     }
+
+    if (isMobile) return "grid-cols-1";
     return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-[90rem] mx-auto";
   };
 
   // const filteredEvents = events.filter((event) => event.open);
   const filteredEvents = events;
 
+  if (isMobile && !isModalView) {
+    return (
+      <section className="w-full px-0 py-8 bg-gradient-to-br from-neutral-800 to-neutral-900">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="pb-2"
+        >
+          <h3 className="text-white font-medium text-lg px-4 mb-3">
+            Browse Events
+          </h3>
+          <div className="overflow-x-auto snap-x snap-mandatory flex gap-2 pb-4 px-2">
+            {filteredEvents.map((event, index) => (
+              <div
+                className="min-w-[250px] max-w-[250px] snap-start"
+                key={event.eventid}
+              >
+                <MobileEventCard
+                  event={event}
+                  index={index}
+                  activeTab={activeTab}
+                  router={router}
+                />
+              </div>
+            ))}
+            <div className="min-w-4 snap-start"></div>
+          </div>
+        </motion.div>
+      </section>
+    );
+  }
+
   return (
     <section
       className={`w-full ${
         !isModalView
           ? "px-4 py-16 bg-gradient-to-br from-neutral-800 to-neutral-900"
-          : ""
+          : "px-2 py-4"
       }`}
     >
-      <div className={`grid ${getGridClass(filteredEvents.length)} gap-8`}>
+      <div
+        className={`grid ${getGridClass(filteredEvents.length)} gap-4 md:gap-8`}
+      >
         {filteredEvents.map((event, index) => (
-          <motion.div
+          <DesktopEventCard
             key={event.eventid}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            whileHover={{ scale: 1 }}
-            className="w-full h-full"
-          >
-            <Card className="bg-zinc-900 border-zinc-800 h-full border-3 rounded-3xl hover:border-zinc-700 transition-all duration-300 overflow-hidden flex flex-col">
-              <CardHeader className="p-0 flex-grow">
-                <div className="relative w-full pt-4 px-4 aspect-video">
-                  <motion.div
-                    className="w-full h-full aspect-video rounded-t-2xl overflow-hidden"
-                    whileHover={{ scale: 1.2 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Image
-                      src={event.outer_Img || "/events/default.png"}
-                      alt={event.name}
-                      width={400}
-                      height={300}
-                      className="object-cover w-full h-full"
-                    />
-                  </motion.div>
-                </div>
-                <div className="p-6 flex-grow">
-                  <CardTitle className="text-white">{event.name}</CardTitle>
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-xs bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
-                      {event.dept}
-                    </span>
-                  </div>
-                  <CardDescription className="text-zinc-400 mt-2">
-                    {event.short_desc}
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardFooter className="flex justify-end p-6">
-                <Button
-                  className="group items-center"
-                  onClick={() => {
-                    router.push(`/events/${activeTab}/${event.eventid}`);
-                  }}
-                >
-                  Register
-                  <ArrowRight
-                    className="-me-1 ms-2 opacity-60 transition-transform group-hover:translate-x-0.5"
-                    size={16}
-                    strokeWidth={2}
-                    aria-hidden="true"
-                  />
-                </Button>
-              </CardFooter>
-            </Card>
-          </motion.div>
+            event={event}
+            index={index}
+            activeTab={activeTab}
+            router={router}
+          />
         ))}
       </div>
     </section>
