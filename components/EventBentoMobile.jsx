@@ -41,8 +41,8 @@ const BentoGridEventsMobile = ({ shouldEventsAnimate }) => {
             <Image
               src="/workshop/cyber.svg"
               alt="Cybersecurity"
-              width={150}
-              height={150}
+              width={180}
+              height={180}
               className="object-contain"
             />
           </div>
@@ -55,7 +55,7 @@ const BentoGridEventsMobile = ({ shouldEventsAnimate }) => {
             shouldEventsAnimate ? { opacity: 0, x: -50 } : { opacity: 1, x: 0 }
           }
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 2, delay: 0.5 }}
+          transition={{ duration: 1, delay: 0 }}
         >
           <div className="w-full h-full rounded-xl overflow-hidden border-3 border-white shadow-lg">
             <Image
