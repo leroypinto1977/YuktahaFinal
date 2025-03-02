@@ -273,7 +273,23 @@ const WorkshopDetail = () => {
             <h1 className="text-3xl font-bold text-white mb-4">
               {workshop.name}
             </h1>
-            <p className="text-gray-400 text-lg">{workshop.desc}</p>
+            {/* <p
+              className="text-gray-400 text-lg"
+              dangerouslySetInnerHTML={{
+                __html: workshop.desc.replace(/\n/g, "<br />"),
+              }}
+            >
+              {workshop.desc}
+            </p> */}
+            {workshop.desc.split("\n").map((line, index) =>
+              line.trim() ? (
+                <p key={index} className="text-gray-400 text-lg">
+                  {line}
+                </p>
+              ) : (
+                <br key={index} />
+              )
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

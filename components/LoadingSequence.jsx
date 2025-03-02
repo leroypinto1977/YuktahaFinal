@@ -7,11 +7,14 @@
 // import { ShootingStars } from "./acertinity_ui/shooting-stars";
 // import { SparklesCore } from "./acertinity_ui/sparkles";
 // import { StarsBackground } from "./acertinity_ui/stars-background";
+// import { AnimatedTestimonialsDisplay } from "@/components/AnimatedTestimonials";
+// import { LogoTicker } from "@/components/LogoTicker";
 // import PixelCardWithImage from "@/components/PixelCardWithImage";
 // import { TextReveal } from "@/components/magicui/text-reveal";
 // import PixelCard from "@/components/react-bits/PixelCard";
 // import TiltedCard from "@/components/react-bits/TiltedCard";
 // import { Progress } from "@heroui/progress";
+// // Import the LogoTicker component
 // import {
 //   motion,
 //   AnimatePresence,
@@ -22,7 +25,6 @@
 // import React, { useState, useEffect, useRef } from "react";
 
 // const eventDate = new Date("2025-03-14T11:00:00").getTime();
-
 // // Device detection hook
 // const useIsMobile = () => {
 //   const [isMobile, setIsMobile] = useState(false);
@@ -38,12 +40,10 @@
 //   }, []);
 //   return isMobile;
 // };
-
 // // New function for mobile card animations
 // const useMobileCardAnimations = () => {
 //   const cardRefs = useRef([]);
 //   const isMobile = useIsMobile();
-
 //   useEffect(() => {
 //     if (isMobile) {
 //       const observer = new IntersectionObserver(
@@ -57,22 +57,17 @@
 //         },
 //         { threshold: 0.1 }
 //       );
-
 //       cardRefs.current.forEach((card) => observer.observe(card));
-
 //       return () => {
 //         cardRefs.current.forEach((card) => observer.unobserve(card));
 //       };
 //     }
 //   }, [isMobile]);
-
 //   return cardRefs;
 // };
-
 // const CountdownTimer = () => {
 //   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
 //   const isMobile = useIsMobile();
-
 //   useEffect(() => {
 //     const updateCountdown = () => {
 //       const now = new Date().getTime();
@@ -96,7 +91,6 @@
 //     const timer = setInterval(updateCountdown, 1000);
 //     return () => clearInterval(timer);
 //   }, []);
-
 //   return (
 //     <div className="flex flex-row justify-center text-center w-full text-white text-base xs:text-lg sm:text-xl md:text-2xl font-semibold m-2 md:m-4 gap-6">
 //       <span className="p-2 font-sofia text-[#3B6790]">
@@ -114,19 +108,15 @@
 //     </div>
 //   );
 // };
-
 // const ScrollBasedSection = ({ children, className, delay = 0 }) => {
 //   const sectionRef = useRef(null);
 //   const { scrollYProgress } = useScroll({
 //     target: sectionRef,
 //     offset: ["start end", "end start"],
 //   });
-
 //   const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [0, 1, 1, 0]);
 //   const y = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [50, 0, 0, -50]);
-
 //   const isMobile = useIsMobile();
-
 //   if (isMobile) {
 //     return (
 //       <motion.div
@@ -141,7 +131,6 @@
 //       </motion.div>
 //     );
 //   }
-
 //   return (
 //     <motion.div
 //       ref={sectionRef}
@@ -153,7 +142,6 @@
 //     </motion.div>
 //   );
 // };
-
 // const StickyScrollSection = ({ children, height, className, id }) => {
 //   const containerRef = useRef(null);
 //   const isMobile = useIsMobile();
@@ -161,9 +149,7 @@
 //     target: containerRef,
 //     offset: ["start start", "end end"],
 //   });
-
 //   const adjustedHeight = isMobile ? `${parseInt(height) * 0.6}px` : height;
-
 //   return (
 //     <div
 //       ref={containerRef}
@@ -177,27 +163,36 @@
 //     </div>
 //   );
 // };
-
 // const EventLineupSection = () => {
 //   const containerRef = useRef(null);
 //   const isMobile = useIsMobile();
 //   const cardRefs = useMobileCardAnimations();
-
 //   const { scrollYProgress } = useScroll({
 //     target: containerRef,
 //     offset: ["start start", "end start"],
 //   });
 
 //   const cards = [
-//     { src: "/workshop/main.png", title: "Card 1" },
-//     { src: "/home/card2.webp", title: "Card 2" },
-//     { src: "/workshop/main.png", title: "Card 3" },
+//     {
+//       src: "/workshop/main.png",
+//       title: "Card 1",
+//       url: "https://yuktaha.com/workshops",
+//     },
+//     {
+//       src: "/home/card2.webp",
+//       title: "Card 2",
+//       url: "https://yuktaha.com/events",
+//     },
+//     {
+//       src: "/workshop/main.png",
+//       title: "Card 3",
+//       url: "https://yuktaha.com/events",
+//     },
 //   ];
 
 //   const cardAnimations = cards.map((_, index) => {
 //     const startThreshold = 0.1 + index * 0.2;
 //     const endThreshold = startThreshold + 0.15;
-
 //     return {
 //       opacity: useTransform(
 //         scrollYProgress,
@@ -211,7 +206,6 @@
 //       ),
 //     };
 //   });
-
 //   if (isMobile) {
 //     return (
 //       <div ref={containerRef} className="h-auto py-16 relative">
@@ -237,7 +231,7 @@
 //               />
 //             </div>
 //           </ScrollBasedSection>
-//           <div className="flex flex-col justify-center items-center px-2 xs:px-3 sm:px-4 space-y-8">
+//           {/* <div className="flex flex-col justify-center items-center px-2 xs:px-3 sm:px-4 space-y-8">
 //             {cards.map((card, index) => (
 //               <motion.div
 //                 key={index}
@@ -248,7 +242,34 @@
 //                 transition={{ delay: index * 0.2, duration: 0.5 }}
 //                 className="px-10 w-full"
 //               >
-//                 <BackgroundGradientCard src={card.src} className="py-8" />
+//                 <TiltedCard
+//                   showMobileWarning={false}
+//                   showTooltip={false}
+//                   imageSrc={card.src}
+//                 />
+//               </motion.div>
+//             ))}
+//           </div> */}
+
+//           <div className="flex flex-col justify-center items-center px-2 xs:px-3 sm:px-4 space-y-8">
+//             {cards.map((card, index) => (
+//               <motion.div
+//                 key={index}
+//                 ref={(el) => (cardRefs.current[index] = el)}
+//                 initial={{ opacity: 0, y: 20 }}
+//                 whileInView={{ opacity: 1, y: 0 }}
+//                 viewport={{ once: true }}
+//                 transition={{ delay: index * 0.2, duration: 0.5 }}
+//                 className="px-10 w-full cursor-pointer"
+//                 onClick={() => window.open(card.url, "_blank")}
+//               >
+//                 {/* Replaced BackgroundGradientCard with TiltedCard */}
+//                 <TiltedCard
+//                   showMobileWarning={false}
+//                   showTooltip={false}
+//                   imageSrc={card.src}
+//                   url={card.url}
+//                 />
 //               </motion.div>
 //             ))}
 //           </div>
@@ -256,7 +277,6 @@
 //       </div>
 //     );
 //   }
-
 //   return (
 //     <div ref={containerRef} className="h-[300vh] relative">
 //       <div className="sticky top-0 w-full h-screen flex items-center justify-center bg-gradient-to-br from-neutral-950 to-neutral-900">
@@ -293,7 +313,12 @@
 //                 }}
 //                 className="px-2 xs:px-3 sm:px-4 md:px-6 w-full md:w-auto"
 //               >
-//                 <TiltedCard imageSrc={card.src} />
+//                 <TiltedCard
+//                   showMobileWarning={false}
+//                   showTooltip={false}
+//                   imageSrc={card.src}
+//                   url={card.url}
+//                 />
 //               </motion.div>
 //             ))}
 //           </div>
@@ -302,7 +327,100 @@
 //     </div>
 //   );
 // };
+// // New AnimatedTestimonials component with improved mobile rendering
+// const AnimatedTestimonialsScreen = () => {
+//   const containerRef = useRef(null);
+//   const isMobile = useIsMobile();
+//   const { scrollYProgress } = useScroll({
+//     target: containerRef,
+//     offset: ["start end", "end start"],
+//   });
+//   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.8], [0, 1, 1]);
+//   const y = useTransform(scrollYProgress, [0, 0.3, 0.8], [100, 0, 0]);
+//   const testimonials = [
+//     {
+//       name: "Priya Sharma",
+//       position: "Computer Science Student, IIT Madras",
+//       quote:
+//         "Participating in Yuktaha was a game-changer for my career. The workshops and competitions pushed me to learn beyond my comfort zone.",
+//       avatar: "/api/placeholder/64/64",
+//     },
+//     {
+//       name: "Raj Patel",
+//       position: "Machine Learning Engineer",
+//       quote:
+//         "The networking opportunities at Yuktaha are unmatched. I met my current business partners during last year's hackathon!",
+//       avatar: "/api/placeholder/64/64",
+//     },
+//     {
+//       name: "Aisha Khan",
+//       position: "Robotics Enthusiast",
+//       quote:
+//         "The robotics challenge at Yuktaha gave my team the perfect platform to showcase our innovative solution to real-world problems.",
+//       avatar: "/api/placeholder/64/64",
+//     },
+//   ];
 
+//   // Mobile-optimized testimonials section
+//   if (isMobile) {
+//     return (
+//       <div
+//         ref={containerRef}
+//         className="bg-[#FBF8EF] w-full py-16 relative overflow-hidden"
+//       >
+//         <div className="max-w-7xl mx-auto px-4 sm:px-6">
+//           <div className="text-center mb-12">
+//             <ScrollBasedSection>
+//               <h2 className="text-2xl xs:text-3xl sm:text-4xl font-semibold font-sofia text-black mb-6">
+//                 Gallery - Yuktaha 2k24
+//               </h2>
+//               <div className="w-24 h-1 bg-black mx-auto"></div>
+//             </ScrollBasedSection>
+//           </div>
+//           <AnimatedTestimonialsDisplay />
+//           <ScrollBasedSection delay={0.4}>
+//             <div className="text-center mt-10">
+//               <button className="bg-white text-[#3B6790] px-5 py-2 rounded-full font-sofia font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
+//                 Share Your Experience
+//               </button>
+//             </div>
+//           </ScrollBasedSection>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <motion.div
+//       ref={containerRef}
+//       className="bg-[#FBF8EF] w-full py-16 md:py-32 relative overflow-hidden"
+//       style={{
+//         opacity,
+//         y,
+//         transition: { duration: 0.5 },
+//       }}
+//     >
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//         <div className="text-center mb-12">
+//           <ScrollBasedSection>
+//             <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-semibold font-sofia text-black mb-6">
+//               Gallery - Yuktaha 2k24
+//             </h2>
+//             <div className="w-24 h-1 bg-black mx-auto"></div>
+//           </ScrollBasedSection>
+//         </div>
+//         <AnimatedTestimonialsDisplay />
+//         <ScrollBasedSection delay={0.6}>
+//           <div className="text-center mt-12">
+//             <button className="bg-white text-[#3B6790] px-6 py-3 rounded-full font-sofia font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
+//               Share Your Experience
+//             </button>
+//           </div>
+//         </ScrollBasedSection>
+//       </div>
+//     </motion.div>
+//   );
+// };
 // const AnimatedFooter = () => {
 //   const footerRef = useRef(null);
 //   const isMobile = useIsMobile();
@@ -310,10 +428,8 @@
 //     target: footerRef,
 //     offset: ["start end", "end end"],
 //   });
-
 //   const footerOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
 //   const footerY = useTransform(scrollYProgress, [0, 0.5, 1], [100, 0, 0]);
-
 //   return (
 //     <div
 //       ref={footerRef}
@@ -330,14 +446,12 @@
 //     </div>
 //   );
 // };
-
 // const LoadingSequence = ({ children }) => {
 //   const [loading, setLoading] = useState(true);
 //   const [loadingProgress, setLoadingProgress] = useState(0);
 //   const [loadingText, setLoadingText] = useState("initialising");
 //   const [showContent, setShowContent] = useState(false);
 //   const isMobile = useIsMobile();
-
 //   useEffect(() => {
 //     const increment = isMobile ? 2 : 1;
 //     const interval = isMobile ? 20 : 30;
@@ -363,7 +477,6 @@
 //     }, interval);
 //     return () => clearInterval(timer);
 //   }, [isMobile]);
-
 //   return (
 //     <>
 //       <motion.div
@@ -396,7 +509,6 @@
 //           </div>
 //         </div>
 //       </motion.div>
-
 //       {showContent && (
 //         <AnimatePresence>
 //           <motion.div
@@ -404,7 +516,6 @@
 //             animate={{ opacity: 1, y: 0 }}
 //             exit={{ opacity: 0, y: -20 }}
 //             transition={{ delay: isMobile ? 0.3 : 0.5 }}
-//             // className="bg-black"
 //             className="bg-gradient-to-br from-neutral-950 to-neutral-900"
 //           >
 //             <motion.div
@@ -418,7 +529,6 @@
 //             >
 //               <Navbar />
 //             </motion.div>
-
 //             <div className="relative w-full h-screen">
 //               <motion.div
 //                 initial={{ opacity: 0 }}
@@ -438,7 +548,6 @@
 //               >
 //                 <ShootingStars className="absolute inset-0" />
 //               </motion.div>
-
 //               <div className="flex items-center justify-center h-full pb-32 relative z-10">
 //                 <motion.div
 //                   initial={{ opacity: 0, y: 20 }}
@@ -489,7 +598,6 @@
 //                   <CountdownTimer />
 //                 </motion.div>
 //               </div>
-
 //               <motion.div
 //                 initial={{ opacity: 0, y: -20 }}
 //                 animate={{ opacity: 1, y: 0 }}
@@ -504,6 +612,39 @@
 //                 <ChevronDown className="text-white w-6 h-6 md:w-10 md:h-10" />
 //               </motion.div>
 //             </div>
+//             {/* <div className="bg-[#3B6790] w-full h-auto py-8 xs:py-12 sm:py-16 md:py-32 relative">
+//               <ScrollBasedSection className="mb-6 xs:mb-8 sm:mb-10">
+//                 <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-left font-semibold font-sofia text-black px-4 xs:px-5 sm:px-6 md:pl-20">
+//                   About Us
+//                 </h2>
+//               </ScrollBasedSection>
+//               <ScrollBasedSection className="mt-2 xs:mt-3 sm:mt-4" delay={0.2}>
+//                 <p className="text-base xs:text-lg sm:text-2xl md:text-4xl text-left max-w-7xl font-semibold font-sofia text-white pt-4 xs:pt-6 sm:pt-8 md:pt-16 px-4 xs:px-5 sm:px-6 md:pl-20">
+//                   YUKTAHA'25 is a{" "}
+//                   <span className="text-black">National Level Event</span> aims
+//                   to showcase technological and inventive skills from students
+//                   across the country, providing a platform for innovative minds
+//                   to shine.
+//                 </p>
+//               </ScrollBasedSection>
+
+//               <ScrollBasedSection
+//                 className="mt-8 xs:mt-10 sm:mt-12"
+//                 delay={0.3}
+//               >
+//                 {isMobile ? (
+//                   <div className="w-full overflow-hidden py-4">
+//                     <LogoTicker speed={25} />
+//                   </div>
+//                 ) : (
+//                   <div className="w-full overflow-hidden py-8">
+//                     <LogoTicker speed={40} />
+//                   </div>
+//                 )}
+//               </ScrollBasedSection>
+
+//               <div className="pb-8 md:pb-16"></div>
+//             </div> */}
 
 //             <div className="bg-[#3B6790] w-full h-auto py-8 xs:py-12 sm:py-16 md:py-32 relative">
 //               <ScrollBasedSection className="mb-6 xs:mb-8 sm:mb-10">
@@ -520,11 +661,28 @@
 //                   to shine.
 //                 </p>
 //               </ScrollBasedSection>
-//               <div className="pb-8 md:pb-16"></div>
+
+//               {/* Adding flex-grow to create space */}
+//               <div className="flex-grow min-h-[100px]"></div>
+
+//               {/* Logo ticker positioned at the bottom */}
+//               <div className="absolute bottom-0 left-0 right-0">
+//                 <ScrollBasedSection delay={0.3}>
+//                   {isMobile ? (
+//                     <div className="w-full overflow-hidden">
+//                       <LogoTicker speed={25} />
+//                     </div>
+//                   ) : (
+//                     <div className="w-full overflow-hidden">
+//                       <LogoTicker speed={40} />
+//                     </div>
+//                   )}
+//                 </ScrollBasedSection>
+//               </div>
 //             </div>
-
 //             <EventLineupSection />
-
+//             {/* Modified Testimonials Section with conditional rendering */}
+//             <AnimatedTestimonialsScreen />
 //             <AnimatedFooter />
 //           </motion.div>
 //         </AnimatePresence>
@@ -532,7 +690,6 @@
 //     </>
 //   );
 // };
-
 // export default LoadingSequence;
 
 "use client";
@@ -562,21 +719,39 @@ import { ChevronDown } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 
 const eventDate = new Date("2025-03-14T11:00:00").getTime();
-// Device detection hook
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
+
+// Create fixed viewport dimensions that won't change after initialization
+const useFixedViewport = () => {
+  const [viewport, setViewport] = useState({
+    width: 0,
+    height: 0,
+    isMobile: false,
+  });
+
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const checkMobile = () => {
-        setIsMobile(window.innerWidth < 768);
-      };
-      checkMobile();
-      window.addEventListener("resize", checkMobile);
-      return () => window.removeEventListener("resize", checkMobile);
+      // Set viewport dimensions once at initialization
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const isMobile = width < 768;
+
+      setViewport({
+        width,
+        height,
+        isMobile,
+      });
     }
   }, []);
+
+  return viewport;
+};
+
+// Modified device detection hook that uses fixed viewport
+const useIsMobile = () => {
+  const { isMobile } = useFixedViewport();
   return isMobile;
 };
+
 // New function for mobile card animations
 const useMobileCardAnimations = () => {
   const cardRefs = useRef([]);
@@ -602,6 +777,7 @@ const useMobileCardAnimations = () => {
   }, [isMobile]);
   return cardRefs;
 };
+
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
   const isMobile = useIsMobile();
@@ -645,6 +821,7 @@ const CountdownTimer = () => {
     </div>
   );
 };
+
 const ScrollBasedSection = ({ children, className, delay = 0 }) => {
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -679,9 +856,10 @@ const ScrollBasedSection = ({ children, className, delay = 0 }) => {
     </motion.div>
   );
 };
+
 const StickyScrollSection = ({ children, height, className, id }) => {
   const containerRef = useRef(null);
-  const isMobile = useIsMobile();
+  const { isMobile, height: viewportHeight } = useFixedViewport();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -700,6 +878,7 @@ const StickyScrollSection = ({ children, height, className, id }) => {
     </div>
   );
 };
+
 const EventLineupSection = () => {
   const containerRef = useRef(null);
   const isMobile = useIsMobile();
@@ -768,25 +947,6 @@ const EventLineupSection = () => {
               />
             </div>
           </ScrollBasedSection>
-          {/* <div className="flex flex-col justify-center items-center px-2 xs:px-3 sm:px-4 space-y-8">
-            {cards.map((card, index) => (
-              <motion.div
-                key={index}
-                ref={(el) => (cardRefs.current[index] = el)}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2, duration: 0.5 }}
-                className="px-10 w-full"
-              >
-                <TiltedCard
-                  showMobileWarning={false}
-                  showTooltip={false}
-                  imageSrc={card.src}
-                />
-              </motion.div>
-            ))}
-          </div> */}
 
           <div className="flex flex-col justify-center items-center px-2 xs:px-3 sm:px-4 space-y-8">
             {cards.map((card, index) => (
@@ -800,7 +960,6 @@ const EventLineupSection = () => {
                 className="px-10 w-full cursor-pointer"
                 onClick={() => window.open(card.url, "_blank")}
               >
-                {/* Replaced BackgroundGradientCard with TiltedCard */}
                 <TiltedCard
                   showMobileWarning={false}
                   showTooltip={false}
@@ -864,6 +1023,7 @@ const EventLineupSection = () => {
     </div>
   );
 };
+
 // New AnimatedTestimonials component with improved mobile rendering
 const AnimatedTestimonialsScreen = () => {
   const containerRef = useRef(null);
@@ -958,9 +1118,10 @@ const AnimatedTestimonialsScreen = () => {
     </motion.div>
   );
 };
+
 const AnimatedFooter = () => {
   const footerRef = useRef(null);
-  const isMobile = useIsMobile();
+  const { isMobile, height: viewportHeight } = useFixedViewport();
   const { scrollYProgress } = useScroll({
     target: footerRef,
     offset: ["start end", "end end"],
@@ -983,12 +1144,18 @@ const AnimatedFooter = () => {
     </div>
   );
 };
+
 const LoadingSequence = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingText, setLoadingText] = useState("initialising");
   const [showContent, setShowContent] = useState(false);
-  const isMobile = useIsMobile();
+  const {
+    isMobile,
+    width: viewportWidth,
+    height: viewportHeight,
+  } = useFixedViewport();
+
   useEffect(() => {
     const increment = isMobile ? 2 : 1;
     const interval = isMobile ? 20 : 30;
@@ -1149,39 +1316,6 @@ const LoadingSequence = ({ children }) => {
                 <ChevronDown className="text-white w-6 h-6 md:w-10 md:h-10" />
               </motion.div>
             </div>
-            {/* <div className="bg-[#3B6790] w-full h-auto py-8 xs:py-12 sm:py-16 md:py-32 relative">
-              <ScrollBasedSection className="mb-6 xs:mb-8 sm:mb-10">
-                <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-left font-semibold font-sofia text-black px-4 xs:px-5 sm:px-6 md:pl-20">
-                  About Us
-                </h2>
-              </ScrollBasedSection>
-              <ScrollBasedSection className="mt-2 xs:mt-3 sm:mt-4" delay={0.2}>
-                <p className="text-base xs:text-lg sm:text-2xl md:text-4xl text-left max-w-7xl font-semibold font-sofia text-white pt-4 xs:pt-6 sm:pt-8 md:pt-16 px-4 xs:px-5 sm:px-6 md:pl-20">
-                  YUKTAHA'25 is a{" "}
-                  <span className="text-black">National Level Event</span> aims
-                  to showcase technological and inventive skills from students
-                  across the country, providing a platform for innovative minds
-                  to shine.
-                </p>
-              </ScrollBasedSection>
-
-              <ScrollBasedSection
-                className="mt-8 xs:mt-10 sm:mt-12"
-                delay={0.3}
-              >
-                {isMobile ? (
-                  <div className="w-full overflow-hidden py-4">
-                    <LogoTicker speed={25} />
-                  </div>
-                ) : (
-                  <div className="w-full overflow-hidden py-8">
-                    <LogoTicker speed={40} />
-                  </div>
-                )}
-              </ScrollBasedSection>
-
-              <div className="pb-8 md:pb-16"></div>
-            </div> */}
 
             <div className="bg-[#3B6790] w-full h-auto py-8 xs:py-12 sm:py-16 md:py-32 relative">
               <ScrollBasedSection className="mb-6 xs:mb-8 sm:mb-10">

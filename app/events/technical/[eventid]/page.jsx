@@ -170,7 +170,16 @@ const TechnicalEventDetail = () => {
 
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-white mb-4">{event.name}</h1>
-            <p className="text-gray-400 text-lg">{event.desc}</p>
+            {/* <p className="text-gray-400 text-lg">{event.desc}</p> */}
+            {event.desc.split("\n").map((line, index) =>
+              line.trim() ? (
+                <p key={index} className="text-gray-400 text-lg">
+                  {line}
+                </p>
+              ) : (
+                <br key={index} />
+              )
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -206,6 +215,10 @@ const TechnicalEventDetail = () => {
                     </span>{" "}
                     {event.availability}/{event.limit} spots
                   </p> */}
+                  <p className="text-gray-400">
+                    <span className="font-medium text-white">Prize Pool:</span>{" "}
+                    ₹{event.p_amt}
+                  </p>
                 </div>
               </div>
 
@@ -235,6 +248,75 @@ const TechnicalEventDetail = () => {
                   </>
                 )}
               </div>
+
+              <div>
+                <h2 className="text-xl font-semibold text-white mb-3">
+                  About the Event
+                </h2>
+                <p className="text-gray-400">
+                  <span className="font-medium text-white">
+                    Number of rounds:
+                  </span>{" "}
+                  {event.rounds}
+                </p>
+
+                {/* <h2 className="text-xl font-semibold text-white mb-3">
+                  About the Event
+                </h2> */}
+
+                {event.p1 && (
+                  <>
+                    <h2 className="text-xl font-semibold text-white mb-3">
+                      Round 1:
+                    </h2>
+                    {/* <p className="text-gray-400 font-medium">{event.p1}</p> */}
+                    {event.p1.split("\n").map((line, index) =>
+                      line.trim() ? (
+                        <p key={index} className="text-gray-400 font-medium">
+                          {line}
+                        </p>
+                      ) : (
+                        <br key={index} />
+                      )
+                    )}
+                  </>
+                )}
+                {event.p2 && (
+                  <>
+                    <h2 className="text-xl font-semibold text-white mb-3">
+                      Round 2:
+                    </h2>
+                    {/* <p className="text-gray-400 font-medium">{event.p2}</p> */}
+                    {event.p2.split("\n").map((line, index) =>
+                      line.trim() ? (
+                        <p key={index} className="text-gray-400 font-medium">
+                          {line}
+                        </p>
+                      ) : (
+                        <br key={index} />
+                      )
+                    )}
+                  </>
+                )}
+                {event.p3 && (
+                  <>
+                    <h2 className="text-xl font-semibold text-white mb-3">
+                      Round 3:
+                    </h2>
+                    {/* <p className="text-gray-400 font-medium">{event.p3}</p> */}
+                    {event.p3.split("\n").map((line, index) =>
+                      line.trim() ? (
+                        <p key={index} className="text-gray-400 font-medium">
+                          {line}
+                        </p>
+                      ) : (
+                        <br key={index} />
+                      )
+                    )}
+                  </>
+                )}
+              </div>
+
               {!event.open && (
                 <div>
                   <h2 className="text-xl font-semibold text-white mb-3">
@@ -251,7 +333,29 @@ const TechnicalEventDetail = () => {
               <h2 className="text-xl font-semibold text-white mb-3">
                 Requirements from participants
               </h2>
-              <p className="text-gray-400 whitespace-pre-line">{event.pr}</p>
+              {/* <p className="text-gray-400 whitespace-pre-line">{event.pr}</p> */}
+              {event.required_materials.split("\n").map((line, index) =>
+                line.trim() ? (
+                  <p key={index} className="text-gray-400 text-lg">
+                    {line}
+                  </p>
+                ) : (
+                  <br key={index} />
+                )
+              )}
+              <h2 className="text-xl font-semibold text-white mb-3">
+                Guidelines
+              </h2>
+              {/* <p className="text-gray-400 whitespace-pre-line">{event.pr}</p> */}
+              {event.guidelines.split("\n").map((line, index) =>
+                line.trim() ? (
+                  <p key={index} className="text-gray-400 text-lg">
+                    {line}
+                  </p>
+                ) : (
+                  <br key={index} />
+                )
+              )}
             </div>
           </div>
 
