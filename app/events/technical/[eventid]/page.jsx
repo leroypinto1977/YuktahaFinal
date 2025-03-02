@@ -170,7 +170,6 @@ const TechnicalEventDetail = () => {
 
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-white mb-4">{event.name}</h1>
-            {/* <p className="text-gray-400 text-lg">{event.desc}</p> */}
             {event.desc.split("\n").map((line, index) =>
               line.trim() ? (
                 <p key={index} className="text-gray-400 text-lg">
@@ -209,12 +208,6 @@ const TechnicalEventDetail = () => {
                     <span className="font-medium text-white">Fees:</span> ₹
                     {event.fees}
                   </p>
-                  {/* <p className="text-gray-400">
-                    <span className="font-medium text-white">
-                      Availability:
-                    </span>{" "}
-                    {event.availability}/{event.limit} spots
-                  </p> */}
                   <p className="text-gray-400">
                     <span className="font-medium text-white">Prize Pool:</span>{" "}
                     ₹{event.p_amt}
@@ -259,10 +252,6 @@ const TechnicalEventDetail = () => {
                   </span>{" "}
                   {event.rounds}
                 </p>
-
-                {/* <h2 className="text-xl font-semibold text-white mb-3">
-                  About the Event
-                </h2> */}
 
                 {event.p1 && (
                   <>
@@ -323,7 +312,8 @@ const TechnicalEventDetail = () => {
                     Registration Status:
                   </h2>
                   <p className="text-gray-400">
-                    Registration is closed. Try Onspot if possible.
+                    {/* Registration is closed. Try Onspot if possible. */}
+                    Registration will be open from 3rd March 5pm.
                   </p>
                 </div>
               )}
@@ -331,7 +321,7 @@ const TechnicalEventDetail = () => {
 
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">
-                Requirements from participants
+                Requirement from participants
               </h2>
               {/* <p className="text-gray-400 whitespace-pre-line">{event.pr}</p> */}
               {event.required_materials.split("\n").map((line, index) =>
