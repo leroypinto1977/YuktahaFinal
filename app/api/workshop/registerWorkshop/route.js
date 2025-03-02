@@ -1,187 +1,3 @@
-// import createTransaction from "@/app/api/transaction/createTransaction/route.js";
-// import UserDetails from "@/models/UserDetails";
-// import Workshop from "@/models/WorkshopDetails";
-// import mongoose from "mongoose";
-
-// export default async function handler(req, res) {
-//   if (req.method !== "POST") {
-//     return res.status(405).json({ message: "Method not allowed" });
-//   }
-
-//   const { userDetails, workshopId } = req.body;
-
-//   if (!userDetails || !workshopId) {
-//     return res.status(400).json({ message: "Missing required fields" });
-//   }
-
-//   try {
-//     await mongoose.connect(process.env.MONGODB_URI);
-
-//     const workshop = await Workshop.findOne({ workshopid: workshopId });
-
-//     if (!workshop || workshop.availability <= 0) {
-//       return res.status(400).json({ message: "Workshop is full or not found" });
-//     }
-
-//     // Create transaction
-//     const transaction = await createTransaction({
-//       yuktahaId: userDetails.yuktahaId,
-//       firstName: userDetails.firstName,
-//       phoneNumber: userDetails.phoneNumber,
-//       fees: workshop.fees,
-//       event_type: "workshop",
-//       eventId: workshop.workshopid,
-//       email: userDetails.email,
-//     });
-
-//     // Update user details
-//     await UserDetails.findOneAndUpdate(
-//       { email: userDetails.email },
-//       {
-//         $push: {
-//           workshop: {
-//             name: workshop.name,
-//             workshopid: workshop.workshopid,
-//             outer_Img: workshop.outer_Img,
-//             paid: false, // Assuming payment is not done yet
-//           },
-//         },
-//         $inc: { workshopsRegistered: 1 },
-//       }
-//     );
-
-//     // Update workshop details
-//     await Workshop.findOneAndUpdate(
-//       { workshopid: workshopId },
-//       {
-//         $push: {
-//           participants: {
-//             yuktahaId: userDetails.yuktahaId,
-//             firstName: userDetails.firstName,
-//             email: userDetails.email,
-//             phoneNumber: userDetails.phoneNumber,
-//             college: userDetails.college,
-//           },
-//         },
-//         $inc: { count: 1, availability: -1 },
-//       }
-//     );
-
-//     res
-//       .status(200)
-//       .json({ message: "Workshop registered successfully", transaction });
-//   } catch (error) {
-//     console.error("Error registering for workshop:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// }
-
-// app/api/workshop/registerWorkshop/route.js
-
-// import { connectToDatabase } from "@/lib/mongodb";
-// import UserDetails from "@/models/UserDetails";
-// import Workshop from "@/models/WorkshopDetails";
-// import { NextResponse } from "next/server";
-
-// export async function POST(request) {
-//   try {
-//     // Connect to database
-//     await connectToDatabase();
-//     console.log("Using existing database connection");
-
-//     // Parse the request body
-//     const body = await request.json();
-
-//     if (!body.userDetails || !body.workshopId) {
-//       return NextResponse.json(
-//         { message: "Missing required fields" },
-//         { status: 400 }
-//       );
-//     }
-
-//     const { userDetails, workshopId } = body;
-
-//     // Find the workshop
-//     const workshop = await Workshop.findOne({ workshopid: workshopId });
-//     if (!workshop) {
-//       return NextResponse.json(
-//         { message: "Workshop not found" },
-//         { status: 404 }
-//       );
-//     }
-
-//     // Find user
-//     const user = await UserDetails.findOne({ email: userDetails.email });
-//     if (!user) {
-//       return NextResponse.json({ message: "User not found" }, { status: 404 });
-//     }
-
-//     // Check if user is already registered for this workshop
-//     const isAlreadyRegistered = user.workshop.some(
-//       (w) => w.workshopid === workshopId
-//     );
-//     if (isAlreadyRegistered) {
-//       return NextResponse.json(
-//         { message: "Already registered for this workshop" },
-//         { status: 400 }
-//       );
-//     }
-
-//     // Create new workshop registration
-//     const newWorkshopRegistration = {
-//       name: workshop.name,
-//       workshopid: workshopId,
-//       outer_Img: workshop.outer_Img,
-//       paid: true,
-//     };
-
-//     // Convert workshopsRegistered to number if it's a string
-//     if (typeof user.workshopsRegistered === "string") {
-//       await UserDetails.updateOne(
-//         { email: userDetails.email },
-//         {
-//           $set: {
-//             workshopsRegistered: parseInt(user.workshopsRegistered) || 0,
-//           },
-//         }
-//       );
-//     }
-
-//     // Update user document
-//     const updatedUser = await UserDetails.findOneAndUpdate(
-//       { email: userDetails.email },
-//       {
-//         $push: { workshop: newWorkshopRegistration },
-//         $inc: { workshopsRegistered: 1 },
-//       },
-//       { new: true }
-//     );
-
-//     if (!updatedUser) {
-//       throw new Error("Failed to update user document");
-//     }
-
-//     return NextResponse.json(
-//       {
-//         message: "Workshop registered successfully",
-//         workshop: newWorkshopRegistration,
-//         workshopsRegistered: updatedUser.workshopsRegistered,
-//       },
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     console.error("Workshop registration error:", error);
-//     return NextResponse.json(
-//       {
-//         message: "Internal server error",
-//         error: error.message,
-//         stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
-//       },
-//       { status: 500 }
-//     );
-//   }
-// }
-
 import { connectToDatabase } from "@/lib/mongodb";
 import Transaction from "@/models/Transaction";
 import UserDetails from "@/models/UserDetails";
@@ -190,21 +6,23 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    // Connect to database
     await connectToDatabase();
-    console.log("Using existing database connection");
 
-    // Parse the request body
     const body = await request.json();
+    const { userDetails, workshopId, transactionId } = body;
 
-    if (!body.userDetails || !body.workshopId) {
+    // Validate required fields
+    const missingFields = [];
+    if (!userDetails) missingFields.push("userDetails");
+    if (!workshopId) missingFields.push("workshopId");
+    if (!transactionId) missingFields.push("transactionId");
+
+    if (missingFields.length > 0) {
       return NextResponse.json(
-        { message: "Missing required fields" },
+        { message: `Missing required fields: ${missingFields.join(", ")}` },
         { status: 400 }
       );
     }
-
-    const { userDetails, workshopId } = body;
 
     // Find the workshop
     const workshop = await Workshop.findOne({ workshopid: workshopId });
@@ -248,33 +66,6 @@ export async function POST(request) {
       paid: true,
     };
 
-    // Convert workshopsRegistered to number if it's a string
-    if (typeof user.workshopsRegistered === "string") {
-      await UserDetails.updateOne(
-        { email: userDetails.email },
-        {
-          $set: {
-            workshopsRegistered: parseInt(user.workshopsRegistered) || 0,
-          },
-        }
-      );
-    }
-
-    // Create transaction
-    const transactionId = `WS${workshopId}_${Date.now()}`;
-    const transaction = new Transaction({
-      transactionId,
-      yuktahaId: userDetails.yuktahaId,
-      firstName: userDetails.firstName,
-      phoneNumber: userDetails.phoneNumber,
-      fees: workshop.fees,
-      event_type: "workshop",
-      eventId: workshop.workshopid,
-      email: userDetails.email,
-      freepass: false,
-    });
-    await transaction.save();
-
     // Update workshop details with new participant and counts
     const updatedWorkshop = await Workshop.findOneAndUpdate(
       { workshopid: workshopId },
@@ -314,12 +105,23 @@ export async function POST(request) {
       throw new Error("Failed to update user document");
     }
 
+    // Update transaction status
+    const updatedTransaction = await Transaction.findOneAndUpdate(
+      { transactionId },
+      { status: "completed" }, // Update transaction stage
+      { new: true }
+    );
+
+    if (!updatedTransaction) {
+      throw new Error("Failed to update transaction document");
+    }
+
     return NextResponse.json(
       {
         message: "Workshop registered successfully",
         workshop: newWorkshopRegistration,
         workshopsRegistered: updatedUser.workshopsRegistered,
-        transaction: transaction,
+        transaction: updatedTransaction,
       },
       { status: 200 }
     );

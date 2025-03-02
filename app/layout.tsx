@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/app/AuthProvider";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { ToastProvider } from "@/components/ui/toast";
 import { HeroUIProvider } from "@heroui/react";
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default function RootLayout({
           {children}
         </body> */}
         {children}
+        {/* <ToastProvider>{children}</ToastProvider> */}
       </html>
     </AuthProvider>
   );

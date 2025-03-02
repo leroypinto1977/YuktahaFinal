@@ -387,7 +387,7 @@ import * as z from "zod";
 // ✅ Define Validation Schema with Zod
 const formSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
+  lastName: z.string().min(0, "Last name is required"),
   city: z.string().min(2, "City is required"),
   college: z.string().min(2, "College is required"),
   department: z.string().min(2, "Department is required"),

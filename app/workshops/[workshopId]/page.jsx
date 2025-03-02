@@ -40,9 +40,125 @@ const WorkshopDetail = () => {
     fetchWorkshop();
   }, [numericWorkshopId]);
 
+  // const handleRegister = async (user, numericWorkshopId) => {
+  //   try {
+  //     // First fetch user details
+  //     const userResponse = await fetch(
+  //       `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
+  //       { cache: "no-store" }
+  //     );
+
+  //     if (!userResponse.ok) {
+  //       const errorData = await userResponse.text();
+  //       throw new Error(`Failed to fetch user details: ${errorData}`);
+  //     }
+
+  //     const userDetails = await userResponse.json();
+
+  //     console.log("userDetails");
+
+  //     // Prepare workshop registration payload
+  //     const registrationPayload = {
+  //       userDetails: {
+  //         yuktahaId: userDetails.yuktahaId,
+  //         firstName: userDetails.firstName,
+  //         email: userDetails.email,
+  //         phoneNumber: userDetails.phoneNumber,
+  //         college: userDetails.college,
+  //       },
+  //       workshopId: numericWorkshopId,
+  //     };
+
+  //     // Register for workshop
+  //     const workshopResponse = await fetch("/api/workshop/registerWorkshop", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(registrationPayload),
+  //     });
+
+  //     // First try to get the response as text
+  //     const responseText = await workshopResponse.text();
+
+  //     // Then parse it as JSON if possible
+  //     let workshopData;
+  //     try {
+  //       workshopData = JSON.parse(responseText);
+  //     } catch (e) {
+  //       console.error("Failed to parse response:", responseText);
+  //       throw new Error("Invalid response format");
+  //     }
+
+  //     if (workshopResponse.ok) {
+  //       alert("Workshop registered successfully!");
+  //       return {
+  //         success: true,
+  //         message: "Workshop registered successfully!",
+  //         data: workshopData,
+  //       };
+  //     } else {
+  //       alert(workshopData.message || "Failed to register for workshop");
+  //       return {
+  //         success: false,
+  //         message: workshopData.message,
+  //         error: workshopData,
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.error("Error registering for workshop:", error);
+  //     alert("An error occurred while registering for the workshop.");
+  //     return {
+  //       success: false,
+  //       message: "An error occurred while registering for the workshop.",
+  //       error: error.message,
+  //     };
+  //   }
+  // };
+
+  // const handleRegister = async (user, numericWorkshopId) => {
+  //   try {
+  //     const payload = {
+  //       userDetails: {
+  //         yuktahaId: user.yuktahaId,
+  //         firstName: user.given_name,
+  //         email: user.email,
+  //         phoneNumber: user.phoneNumber,
+  //         college: user.college,
+  //       },
+  //       workshopId: numericWorkshopId,
+  //     };
+
+  //     console.log("Request Payload:", payload); // Log the payload
+
+  //     const transactionResponse = await fetch(
+  //       "/api/transaction/createTransaction/workshop",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(payload),
+  //       }
+  //     );
+
+  //     const transactionData = await transactionResponse.json();
+  //     if (!transactionResponse.ok) {
+  //       throw new Error(
+  //         transactionData.message || "Failed to create transaction"
+  //       );
+  //     }
+
+  //     const { paymentUrl } = transactionData;
+  //     window.location.href = paymentUrl; // Redirect to payment URL
+  //   } catch (error) {
+  //     console.error("Error registering for workshop:", error);
+  //     alert("An error occurred while registering for the workshop.");
+  //   }
+  // };
+
   const handleRegister = async (user, numericWorkshopId) => {
     try {
-      // First fetch user details
       const userResponse = await fetch(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
         { cache: "no-store" }
@@ -55,8 +171,9 @@ const WorkshopDetail = () => {
 
       const userDetails = await userResponse.json();
 
-      // Prepare workshop registration payload
-      const registrationPayload = {
+      console.log("userDetails");
+
+      const payload = {
         userDetails: {
           yuktahaId: userDetails.yuktahaId,
           firstName: userDetails.firstName,
@@ -64,53 +181,49 @@ const WorkshopDetail = () => {
           phoneNumber: userDetails.phoneNumber,
           college: userDetails.college,
         },
-        workshopId: numericWorkshopId,
+        workshopId: numericWorkshopId, // Ensure this is a number
       };
 
-      // Register for workshop
-      const workshopResponse = await fetch("/api/workshop/registerWorkshop", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registrationPayload),
-      });
+      console.log("Request Payload:", payload);
 
-      // First try to get the response as text
-      const responseText = await workshopResponse.text();
+      const transactionResponse = await fetch(
+        "/api/transaction/createTransaction/workshop",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
-      // Then parse it as JSON if possible
-      let workshopData;
-      try {
-        workshopData = JSON.parse(responseText);
-      } catch (e) {
-        console.error("Failed to parse response:", responseText);
-        throw new Error("Invalid response format");
+      const transactionData = await transactionResponse.json();
+      if (!transactionResponse.ok) {
+        throw new Error(
+          transactionData.message || "Failed to create transaction"
+        );
       }
 
-      if (workshopResponse.ok) {
-        alert("Workshop registered successfully!");
-        return {
-          success: true,
-          message: "Workshop registered successfully!",
-          data: workshopData,
-        };
-      } else {
-        alert(workshopData.message || "Failed to register for workshop");
-        return {
-          success: false,
-          message: workshopData.message,
-          error: workshopData,
-        };
-      }
+      const { paymentUrl } = transactionData;
+      window.location.href = paymentUrl; // Redirect to payment URL
     } catch (error) {
       console.error("Error registering for workshop:", error);
-      alert("An error occurred while registering for the workshop.");
-      return {
-        success: false,
-        message: "An error occurred while registering for the workshop.",
-        error: error.message,
-      };
+      // alert("An error occurred while registering for the workshop.");
+
+      showToast({
+        title: "Error!",
+        description: "An error occurred while registering for the workshop.",
+        variant: "destructive",
+        duration: 5000,
+        action: (
+          <ToastAction
+            altText="Dismiss"
+            onClick={() => console.log("Action clicked")}
+          >
+            Dismiss
+          </ToastAction>
+        ),
+      });
     }
   };
 
