@@ -89,6 +89,9 @@ export async function POST(request) {
     transaction.status = txn_status === 1 ? "success" : "failed";
     await transaction.save();
 
+    console.log("Transaction ID: ", txn_id);
+    console.log("Transaction Status: ", txn_status);
+
     return NextResponse.json(
       { message: "Payment status updated successfully" },
       { status: 200 }
