@@ -74,7 +74,7 @@ export default function NavbarTabs({ isAuthenticated, user, isMobile }) {
     { href: "/", label: "Home" },
     { href: "/workshops", label: "Workshops" },
     { href: "/events", label: "Events" },
-    { href: "/ambassador", label: "Student Ambassador" },
+    // { href: "/ambassador", label: "Student Ambassador" },
   ];
 
   const privateNavLinks = [{ href: "/profile", label: "Profile" }];

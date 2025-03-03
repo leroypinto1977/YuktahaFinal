@@ -359,12 +359,23 @@ const WorkshopDetail = () => {
               )} */}
             </div>
 
-            <div>
+            {/* <div>
               <h2 className="text-xl font-semibold text-white mb-3">
                 Requirements from participants
               </h2>
               <p className="text-gray-400 whitespace-pre-line">{workshop.pr}</p>
-            </div>
+            </div> */}
+
+            {!workshop.pr && (
+              <div>
+                <h2 className="text-xl font-semibold text-white mb-3">
+                  Requirements from participants
+                </h2>
+                <p className="text-gray-400 whitespace-pre-line">
+                  {workshop.pr}
+                </p>
+              </div>
+            )}
 
             {!workshop.open && (
               <div>

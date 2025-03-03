@@ -702,6 +702,7 @@ import { ShootingStars } from "./acertinity_ui/shooting-stars";
 import { SparklesCore } from "./acertinity_ui/sparkles";
 import { StarsBackground } from "./acertinity_ui/stars-background";
 import { AnimatedTestimonialsDisplay } from "@/components/AnimatedTestimonials";
+import { CardTestimonialCarouselDemo } from "@/components/CardTestimonialCarousel";
 import { LogoTicker } from "@/components/LogoTicker";
 import PixelCardWithImage from "@/components/PixelCardWithImage";
 import { SponsorsCarouselDisplay } from "@/components/SponsorsCarouselDisplay";
@@ -907,6 +908,7 @@ const SponsorsSection = () => {
             </ScrollBasedSection>
           </div>
           <SponsorsCarouselDisplay />
+          {/* <CardTestimonialCarouselDemo /> */}
           <ScrollBasedSection delay={0.4}>
             <div className="text-center mt-10"></div>
           </ScrollBasedSection>
@@ -946,7 +948,6 @@ const SponsorsSection = () => {
 const EventLineupSection = () => {
   const containerRef = useRef(null);
   const isMobile = useIsMobile();
-  const cardRefs = useMobileCardAnimations();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -1011,7 +1012,12 @@ const EventLineupSection = () => {
     return (
       <div ref={containerRef} className="h-auto py-16 relative">
         <div className="w-full h-full flex flex-col justify-center">
-          <ScrollBasedSection>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
             <div className="flex justify-center mb-0">
               <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-semibold font-sofia text-center text-white relative z-20">
                 Event Lineup
@@ -1031,16 +1037,20 @@ const EventLineupSection = () => {
                 particleColor="#FFFFFF"
               />
             </div>
-          </ScrollBasedSection>
+          </motion.div>
+
           <div className="flex flex-col justify-center items-center px-2 xs:px-3 sm:px-4 space-y-8">
             {cards.map((card, index) => (
               <motion.div
                 key={index}
-                ref={(el) => (cardRefs.current[index] = el)}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2, duration: 0.5 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.2,
+                  ease: "easeOut",
+                }}
                 className="px-4 w-full max-w-xs"
               >
                 <GradientBorderedImage imageSrc={card.src} url={card.url} />
@@ -1103,6 +1113,167 @@ const EventLineupSection = () => {
     </div>
   );
 };
+
+// const EventLineupSection = () => {
+//   const containerRef = useRef(null);
+//   const isMobile = useIsMobile();
+//   const cardRefs = useMobileCardAnimations();
+//   const { scrollYProgress } = useScroll({
+//     target: containerRef,
+//     offset: ["start start", "end start"],
+//   });
+
+//   const cards = [
+//     {
+//       src: "/workshop/main.png",
+//       title: "Card 1",
+//       url: "https://yuktaha.com/workshops",
+//     },
+//     {
+//       src: "/home/card2.webp",
+//       title: "Card 2",
+//       url: "https://yuktaha.com/events",
+//     },
+//     {
+//       src: "/workshop/main.png",
+//       title: "Card 3",
+//       url: "https://yuktaha.com/events",
+//     },
+//   ];
+
+//   const cardAnimations = cards.map((_, index) => {
+//     const startThreshold = 0.1 + index * 0.2;
+//     const endThreshold = startThreshold + 0.15;
+//     return {
+//       opacity: useTransform(
+//         scrollYProgress,
+//         [0, startThreshold, endThreshold, 0.9, 1],
+//         [0, 0, 1, 1, 0]
+//       ),
+//       y: useTransform(
+//         scrollYProgress,
+//         [0, startThreshold, endThreshold, 0.9, 1],
+//         [100, 100, 0, 0, -100]
+//       ),
+//     };
+//   });
+
+//   // Gradient bordered card for mobile view
+//   const GradientBorderedImage = ({ imageSrc, url }) => {
+//     return (
+//       <div
+//         className="relative rounded-xl p-[2px] overflow-hidden bg-gradient-to-br from-neutral-950 via-neutral-600 to-neutral-300 cursor-pointer"
+//         onClick={() => window.open(url, "_blank")}
+//       >
+//         <div className="relative bg-black rounded-xl overflow-hidden h-full">
+//           <div className="aspect-[1/1] overflow-hidden">
+//             <img
+//               src={imageSrc}
+//               alt="Event"
+//               className="w-full h-full object-cover"
+//             />
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   };
+
+//   if (isMobile) {
+//     return (
+//       <div ref={containerRef} className="h-auto py-16 relative">
+//         <div className="w-full h-full flex flex-col justify-center">
+//           <ScrollBasedSection>
+//             <div className="flex justify-center mb-0">
+//               <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-semibold font-sofia text-center text-white relative z-20">
+//                 Event Lineup
+//               </h1>
+//             </div>
+//             <div className="w-full md:w-[40rem] h-20 relative mx-auto mb-8">
+//               <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
+//               <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
+//               <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
+//               <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
+//               <SparklesCore
+//                 background="transparent"
+//                 minSize={0.4}
+//                 maxSize={1}
+//                 particleDensity={200}
+//                 className="w-full h-full"
+//                 particleColor="#FFFFFF"
+//               />
+//             </div>
+//           </ScrollBasedSection>
+//           <div className="flex flex-col justify-center items-center px-2 xs:px-3 sm:px-4 space-y-8">
+//             {cards.map((card, index) => (
+//               <motion.div
+//                 key={index}
+//                 ref={(el) => (cardRefs.current[index] = el)}
+//                 initial={{ opacity: 0, y: 20 }}
+//                 whileInView={{ opacity: 1, y: 0 }}
+//                 viewport={{ once: true }}
+//                 transition={{ delay: index * 0.2, duration: 0.5 }}
+//                 className="px-4 w-full max-w-xs"
+//               >
+//                 <GradientBorderedImage imageSrc={card.src} url={card.url} />
+//               </motion.div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   // Desktop view remains unchanged
+//   return (
+//     <div ref={containerRef} className="h-[300vh] relative">
+//       <div className="sticky top-0 w-full h-screen flex items-center justify-center bg-gradient-to-br from-neutral-950 to-neutral-900">
+//         <div className="w-full h-full flex flex-col justify-center">
+//           <ScrollBasedSection>
+//             <div className="flex justify-center mb-0">
+//               <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-semibold font-sofia text-center text-white relative z-20">
+//                 Event Lineup
+//               </h1>
+//             </div>
+//             <div className="w-full md:w-[40rem] h-20 relative mx-auto mb-8">
+//               <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
+//               <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
+//               <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
+//               <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
+//               <SparklesCore
+//                 background="transparent"
+//                 minSize={0.4}
+//                 maxSize={1}
+//                 particleDensity={1200}
+//                 className="w-full h-full"
+//                 particleColor="#FFFFFF"
+//               />
+//               <div className="absolute inset-0 w-full h-full bg-transparent [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+//             </div>
+//           </ScrollBasedSection>
+//           <div className="flex flex-col md:flex-row justify-center items-center px-2 xs:px-3 sm:px-4 md:px-20 space-y-8 md:space-y-0 md:space-x-10">
+//             {cards.map((card, index) => (
+//               <motion.div
+//                 key={index}
+//                 style={{
+//                   opacity: cardAnimations[index].opacity,
+//                   y: cardAnimations[index].y,
+//                 }}
+//                 className="px-2 xs:px-3 sm:px-4 md:px-6 w-full md:w-auto"
+//               >
+//                 <TiltedCard
+//                   showMobileWarning={false}
+//                   showTooltip={false}
+//                   imageSrc={card.src}
+//                   url={card.url}
+//                 />
+//               </motion.div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 // New AnimatedTestimonials component with improved mobile rendering
 const AnimatedTestimonialsScreen = () => {
@@ -1390,7 +1561,7 @@ const LoadingSequence = ({ children }) => {
               <div className="flex-grow min-h-[100px]"></div>
 
               {/* Logo ticker positioned at the bottom */}
-              <div className="absolute bottom-0 left-0 right-0">
+              {/* <div className="absolute bottom-0 left-0 right-0">
                 <ScrollBasedSection delay={0.3}>
                   {isMobile ? (
                     <div className="w-full overflow-hidden">
@@ -1402,10 +1573,11 @@ const LoadingSequence = ({ children }) => {
                     </div>
                   )}
                 </ScrollBasedSection>
-              </div>
+              </div> */}
             </div>
 
             <SponsorsSection />
+            {/* <CardTestimonialCarouselDemo /> */}
 
             <EventLineupSection />
             {/* Modified Testimonials Section with conditional rendering */}

@@ -253,7 +253,7 @@ const TechnicalEventDetail = () => {
                   {event.rounds}
                 </p>
 
-                {event.p1 && (
+                {event.p1 && event.p1.trim() !== "" && (
                   <>
                     <h2 className="text-xl font-semibold text-white mb-3">
                       Round 1:
@@ -270,7 +270,7 @@ const TechnicalEventDetail = () => {
                     )}
                   </>
                 )}
-                {event.p2 && (
+                {event.p2 && event.p2.trim() !== "" && (
                   <>
                     <h2 className="text-xl font-semibold text-white mb-3">
                       Round 2:
@@ -287,12 +287,28 @@ const TechnicalEventDetail = () => {
                     )}
                   </>
                 )}
-                {event.p3 && (
+                {/* {event.p3 && (
                   <>
-                    <h2 className="text-xl font-semibold text-white mb-3">
+                    <h2 className="text-xl font-semibold text-white my-3">
                       Round 3:
                     </h2>
-                    {/* <p className="text-gray-400 font-medium">{event.p3}</p> */}
+                    {event.p3.split("\n").map((line, index) =>
+                      line.trim() ? (
+                        <p key={index} className="text-gray-400 font-medium">
+                          {line}
+                        </p>
+                      ) : (
+                        <br key={index} />
+                      )
+                    )}
+                  </>
+                )} */}
+
+                {event.p3 && event.p3.trim() !== "" && (
+                  <>
+                    <h2 className="text-xl font-semibold text-white my-3">
+                      Round 3:
+                    </h2>
                     {event.p3.split("\n").map((line, index) =>
                       line.trim() ? (
                         <p key={index} className="text-gray-400 font-medium">
@@ -308,7 +324,7 @@ const TechnicalEventDetail = () => {
 
               {!event.open && (
                 <div>
-                  <h2 className="text-xl font-semibold text-white mb-3">
+                  <h2 className="text-xl font-semibold text-white my-3">
                     Registration Status:
                   </h2>
                   <p className="text-gray-400">
@@ -320,10 +336,11 @@ const TechnicalEventDetail = () => {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-white mb-3">
-                Requirement from participants
-              </h2>
-              {/* <p className="text-gray-400 whitespace-pre-line">{event.pr}</p> */}
+              {event.required_materials && (
+                <h2 className="text-xl font-semibold text-white my-3">
+                  Requirement from participants
+                </h2>
+              )}
               {event.required_materials.split("\n").map((line, index) =>
                 line.trim() ? (
                   <p key={index} className="text-gray-400 text-lg">
@@ -333,9 +350,13 @@ const TechnicalEventDetail = () => {
                   <br key={index} />
                 )
               )}
-              <h2 className="text-xl font-semibold text-white mb-3">
-                Guidelines
-              </h2>
+
+              {event.guidelines && (
+                <h2 className="text-xl font-semibold text-white my-3">
+                  Guidelines
+                </h2>
+              )}
+
               {/* <p className="text-gray-400 whitespace-pre-line">{event.pr}</p> */}
               {event.guidelines.split("\n").map((line, index) =>
                 line.trim() ? (
