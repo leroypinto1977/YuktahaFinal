@@ -704,6 +704,7 @@ import { StarsBackground } from "./acertinity_ui/stars-background";
 import { AnimatedTestimonialsDisplay } from "@/components/AnimatedTestimonials";
 import { LogoTicker } from "@/components/LogoTicker";
 import PixelCardWithImage from "@/components/PixelCardWithImage";
+import { SponsorsCarouselDisplay } from "@/components/SponsorsCarouselDisplay";
 import { TextReveal } from "@/components/magicui/text-reveal";
 import PixelCard from "@/components/react-bits/PixelCard";
 import TiltedCard from "@/components/react-bits/TiltedCard";
@@ -879,6 +880,69 @@ const StickyScrollSection = ({ children, height, className, id }) => {
   );
 };
 
+const SponsorsSection = () => {
+  const containerRef = useRef(null);
+  const isMobile = useIsMobile();
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.8], [0, 1, 1]);
+  const y = useTransform(scrollYProgress, [0, 0.3, 0.8], [100, 0, 0]);
+
+  // Mobile-optimized sponsors section
+  if (isMobile) {
+    return (
+      <div
+        ref={containerRef}
+        className="bg-[#FBF8EF] w-full py-16 relative overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <ScrollBasedSection>
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl font-semibold font-sofia text-black mb-6">
+                Our Sponsors
+              </h2>
+              <div className="w-24 h-1 bg-black mx-auto"></div>
+            </ScrollBasedSection>
+          </div>
+          <SponsorsCarouselDisplay />
+          <ScrollBasedSection delay={0.4}>
+            <div className="text-center mt-10"></div>
+          </ScrollBasedSection>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      ref={containerRef}
+      className="bg-[#FBF8EF] w-full py-16 md:py-32 relative overflow-hidden"
+      style={{
+        opacity,
+        y,
+        transition: { duration: 0.5 },
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <ScrollBasedSection>
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-semibold font-sofia text-black mb-6">
+              Our Sponsors
+            </h2>
+            <div className="w-24 h-1 bg-black mx-auto"></div>
+          </ScrollBasedSection>
+        </div>
+        <SponsorsCarouselDisplay />
+        <ScrollBasedSection delay={0.6}>
+          <div className="text-center mt-12"></div>
+        </ScrollBasedSection>
+      </div>
+    </motion.div>
+  );
+};
+
 const EventLineupSection = () => {
   const containerRef = useRef(null);
   const isMobile = useIsMobile();
@@ -922,6 +986,27 @@ const EventLineupSection = () => {
       ),
     };
   });
+
+  // Gradient bordered card for mobile view
+  const GradientBorderedImage = ({ imageSrc, url }) => {
+    return (
+      <div
+        className="relative rounded-xl p-[2px] overflow-hidden bg-gradient-to-br from-neutral-950 via-neutral-600 to-neutral-300 cursor-pointer"
+        onClick={() => window.open(url, "_blank")}
+      >
+        <div className="relative bg-black rounded-xl overflow-hidden h-full">
+          <div className="aspect-[1/1] overflow-hidden">
+            <img
+              src={imageSrc}
+              alt="Event"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   if (isMobile) {
     return (
       <div ref={containerRef} className="h-auto py-16 relative">
@@ -947,7 +1032,6 @@ const EventLineupSection = () => {
               />
             </div>
           </ScrollBasedSection>
-
           <div className="flex flex-col justify-center items-center px-2 xs:px-3 sm:px-4 space-y-8">
             {cards.map((card, index) => (
               <motion.div
@@ -957,15 +1041,9 @@ const EventLineupSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.5 }}
-                className="px-10 w-full cursor-pointer"
-                onClick={() => window.open(card.url, "_blank")}
+                className="px-4 w-full max-w-xs"
               >
-                <TiltedCard
-                  showMobileWarning={false}
-                  showTooltip={false}
-                  imageSrc={card.src}
-                  url={card.url}
-                />
+                <GradientBorderedImage imageSrc={card.src} url={card.url} />
               </motion.div>
             ))}
           </div>
@@ -973,6 +1051,8 @@ const EventLineupSection = () => {
       </div>
     );
   }
+
+  // Desktop view remains unchanged
   return (
     <div ref={containerRef} className="h-[300vh] relative">
       <div className="sticky top-0 w-full h-screen flex items-center justify-center bg-gradient-to-br from-neutral-950 to-neutral-900">
@@ -1034,29 +1114,6 @@ const AnimatedTestimonialsScreen = () => {
   });
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.8], [0, 1, 1]);
   const y = useTransform(scrollYProgress, [0, 0.3, 0.8], [100, 0, 0]);
-  const testimonials = [
-    {
-      name: "Priya Sharma",
-      position: "Computer Science Student, IIT Madras",
-      quote:
-        "Participating in Yuktaha was a game-changer for my career. The workshops and competitions pushed me to learn beyond my comfort zone.",
-      avatar: "/api/placeholder/64/64",
-    },
-    {
-      name: "Raj Patel",
-      position: "Machine Learning Engineer",
-      quote:
-        "The networking opportunities at Yuktaha are unmatched. I met my current business partners during last year's hackathon!",
-      avatar: "/api/placeholder/64/64",
-    },
-    {
-      name: "Aisha Khan",
-      position: "Robotics Enthusiast",
-      quote:
-        "The robotics challenge at Yuktaha gave my team the perfect platform to showcase our innovative solution to real-world problems.",
-      avatar: "/api/placeholder/64/64",
-    },
-  ];
 
   // Mobile-optimized testimonials section
   if (isMobile) {
@@ -1076,11 +1133,7 @@ const AnimatedTestimonialsScreen = () => {
           </div>
           <AnimatedTestimonialsDisplay />
           <ScrollBasedSection delay={0.4}>
-            <div className="text-center mt-10">
-              <button className="bg-white text-[#3B6790] px-5 py-2 rounded-full font-sofia font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
-                Share Your Experience
-              </button>
-            </div>
+            <div className="text-center mt-10"></div>
           </ScrollBasedSection>
         </div>
       </div>
@@ -1109,9 +1162,9 @@ const AnimatedTestimonialsScreen = () => {
         <AnimatedTestimonialsDisplay />
         <ScrollBasedSection delay={0.6}>
           <div className="text-center mt-12">
-            <button className="bg-white text-[#3B6790] px-6 py-3 rounded-full font-sofia font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
+            {/* <button className="bg-white text-[#3B6790] px-6 py-3 rounded-full font-sofia font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
               Share Your Experience
-            </button>
+            </button> */}
           </div>
         </ScrollBasedSection>
       </div>
@@ -1319,12 +1372,12 @@ const LoadingSequence = ({ children }) => {
 
             <div className="bg-[#3B6790] w-full h-auto py-8 xs:py-12 sm:py-16 md:py-32 relative">
               <ScrollBasedSection className="mb-6 xs:mb-8 sm:mb-10">
-                <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-left font-semibold font-sofia text-black px-4 xs:px-5 sm:px-6 md:pl-20">
+                <h2 className="text-2xl xs:text-3xl sm:text-4xl text-left font-semibold font-sofia text-black px-4 xs:px-5 sm:px-6 md:pl-20">
                   About Us
                 </h2>
               </ScrollBasedSection>
               <ScrollBasedSection className="mt-2 xs:mt-3 sm:mt-4" delay={0.2}>
-                <p className="text-base xs:text-lg sm:text-2xl md:text-4xl text-left max-w-7xl font-semibold font-sofia text-white pt-4 xs:pt-6 sm:pt-8 md:pt-16 px-4 xs:px-5 sm:px-6 md:pl-20">
+                <p className="text-lg sm:text-2xl md:text-4xl text-left max-w-7xl font-semibold font-sofia text-white pt-4 xs:pt-6 sm:pt-8 md:pt-16 px-4 xs:px-5 sm:px-6 md:pl-20">
                   YUKTAHA'25 is a{" "}
                   <span className="text-black">National Level Event</span> aims
                   to showcase technological and inventive skills from students
@@ -1351,6 +1404,9 @@ const LoadingSequence = ({ children }) => {
                 </ScrollBasedSection>
               </div>
             </div>
+
+            <SponsorsSection />
+
             <EventLineupSection />
             {/* Modified Testimonials Section with conditional rendering */}
             <AnimatedTestimonialsScreen />

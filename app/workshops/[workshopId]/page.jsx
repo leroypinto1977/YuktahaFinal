@@ -347,7 +347,7 @@ const WorkshopDetail = () => {
                   </>
                 )}
               </div>
-              {!workshop.open && (
+              {/* {!workshop.open && (
                 <div>
                   <h2 className="text-xl font-semibold text-white mb-3">
                     Registration Status:
@@ -356,7 +356,7 @@ const WorkshopDetail = () => {
                     Registration is closed. Try Onspot if possible.
                   </p>
                 </div>
-              )}
+              )} */}
             </div>
 
             <div>
@@ -365,6 +365,18 @@ const WorkshopDetail = () => {
               </h2>
               <p className="text-gray-400 whitespace-pre-line">{workshop.pr}</p>
             </div>
+
+            {!workshop.open && (
+              <div>
+                <h2 className="text-xl font-semibold text-white mb-3">
+                  Registration Status:
+                </h2>
+                <p className="text-gray-400">
+                  {/* Registration is closed. Try Onspot if possible. */}
+                  Registration will be open from 3rd March 5pm.
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="mt-8">
