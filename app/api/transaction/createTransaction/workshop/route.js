@@ -108,6 +108,10 @@ import crypto from "crypto";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
+  const ENCRYPTION_KEY = process.env.KEYENCRYPT;
+  const IVString = process.env.IVSTRING;
+  const IV = Buffer.from(IVString, "hex");
+
   try {
     await connectToDatabase();
     const { userDetails, workshopId } = await request.json();
@@ -141,33 +145,41 @@ export async function POST(request) {
 
     await transaction.save();
 
-    // const paymentParams = {
-    //   reg_id: userDetails.yuktahaId,
-    //   name: userDetails.firstName,
-    //   email: userDetails.email,
-    //   category: workshopId,
-    //   txn_id: transactionId,
-    //   amt: workshop.fees,
-    //   client_returnurl: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/callback`,
-    //   provider: 2, // Assuming TPSL as provider
-    // };
-
-    // Encrypt the payment parameters
     const paymentParams = {
-      reg_id: userDetails.yuktahaId,
+      regid: userDetails.yuktahaId,
       name: userDetails.firstName,
       email: userDetails.email,
-      category: workshopId,
-      txn_id: transactionId,
-      amt: workshop.fees,
-      client_returnurl: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/callback`,
+      categoryid: workshopId,
+      transactionid: transactionId,
+      fees: workshop.fees,
+      returnurl: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/callback`,
       provider: 2, // Assuming TPSL as provider
     };
 
-    const encryptedParams = encryptParams(paymentParams);
+    const raw = `regid=${paymentParams.regid} name=${paymentParams.name.replace(
+      /\s/g,
+      "$"
+    )} email=${paymentParams.email} categoryid=${
+      paymentParams.categoryid
+    } transactionid=${paymentParams.transactionId} fees=${
+      paymentParams.fees
+    } returnurl=${paymentParams.redirectURL} provider=2`;
+
+    const hashsha = (text) => {
+      return crypto.createHash("sha256").update(text).digest("base64");
+    };
+
+    const encryptData = (rawData) => {
+      const cipher = crypto.createCipheriv("aes-256-cbc", ENCRYPTION_KEY, IV);
+      let encrypted = cipher.update(rawData.concat(hashsha(rawData)));
+      encrypted = Buffer.concat([encrypted, cipher.final()]);
+      return encrypted.toString("base64");
+    };
+
+    const encryptedParams = encryptData(raw);
 
     // Generate the payment URL
-    const paymentUrl = `https://cms.psgps.edu.in/payapp/?payment=${encryptedParams}`;
+    const paymentUrl = `https://cms.psgps.edu.in/payapp?payment=${encryptedParams}`;
 
     return NextResponse.json({ paymentUrl }, { status: 200 });
   } catch (error) {
@@ -179,45 +191,34 @@ export async function POST(request) {
   }
 }
 
-// // Utility function to encrypt parameters
 // function encryptParams(params) {
+//   // Validate ENCRYPTION_KEY and ENCRYPTION_IV
+//   const encryptionKey = Buffer.from(process.env.ENCRYPTION_KEY, "ascii");
+
+//   const encryptionIV = Buffer.from(process.env.ENCRYPTION_IV, "hex");
+
+//   // if (!encryptionKey || !encryptionIV) {
+//   //   throw new Error(
+//   //     "Encryption key or IV is missing in environment variables."
+//   //   );
+//   // }
+
+//   // if (encryptionKey.length !== 64 || encryptionIV.length !== 32) {
+//   //   throw new Error(
+//   //     "Invalid encryption key or IV length. Key must be 64 characters and IV must be 32 characters (hex)."
+//   //   );
+//   // }
+
+//   // Create the cipher
 //   const cipher = crypto.createCipheriv(
 //     "aes-256-cbc",
-//     Buffer.from(process.env.ENCRYPTION_KEY, "hex"),
-//     Buffer.from(process.env.ENCRYPTION_IV, "hex")
+//     Buffer.from(encryptionKey, "hex"),
+//     Buffer.from(encryptionIV, "hex")
 //   );
+
+//   // Encrypt the data
 //   let encrypted = cipher.update(JSON.stringify(params), "utf8", "hex");
 //   encrypted += cipher.final("hex");
+
 //   return encrypted;
 // }
-
-function encryptParams(params) {
-  // Validate ENCRYPTION_KEY and ENCRYPTION_IV
-  const encryptionKey = process.env.ENCRYPTION_KEY;
-  const encryptionIV = process.env.ENCRYPTION_IV;
-
-  if (!encryptionKey || !encryptionIV) {
-    throw new Error(
-      "Encryption key or IV is missing in environment variables."
-    );
-  }
-
-  if (encryptionKey.length !== 64 || encryptionIV.length !== 32) {
-    throw new Error(
-      "Invalid encryption key or IV length. Key must be 64 characters and IV must be 32 characters (hex)."
-    );
-  }
-
-  // Create the cipher
-  const cipher = crypto.createCipheriv(
-    "aes-256-cbc",
-    Buffer.from(encryptionKey, "hex"),
-    Buffer.from(encryptionIV, "hex")
-  );
-
-  // Encrypt the data
-  let encrypted = cipher.update(JSON.stringify(params), "utf8", "hex");
-  encrypted += cipher.final("hex");
-
-  return encrypted;
-}

@@ -255,7 +255,7 @@ const TechnicalEventDetail = () => {
 
                 {event.p1 && event.p1.trim() !== "" && (
                   <>
-                    <h2 className="text-xl font-semibold text-white mb-3">
+                    <h2 className="text-xl font-semibold text-white my-3">
                       Round 1:
                     </h2>
                     {/* <p className="text-gray-400 font-medium">{event.p1}</p> */}
@@ -272,7 +272,7 @@ const TechnicalEventDetail = () => {
                 )}
                 {event.p2 && event.p2.trim() !== "" && (
                   <>
-                    <h2 className="text-xl font-semibold text-white mb-3">
+                    <h2 className="text-xl font-semibold text-white my-3">
                       Round 2:
                     </h2>
                     {/* <p className="text-gray-400 font-medium">{event.p2}</p> */}
