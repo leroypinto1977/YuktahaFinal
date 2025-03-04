@@ -100,6 +100,8 @@ export async function POST(request) {
       provider: 2,
     };
 
+    console.log("Payment params: ", paymentParams);
+
     const raw = `regid=${paymentParams.regid} name=${paymentParams.name.replace(
       /\s/g,
       "$"
@@ -108,6 +110,8 @@ export async function POST(request) {
     } fees=${paymentParams.fees} returnurl=${
       paymentParams.returnurl
     } provider=2`;
+
+    console.log(raw);
 
     const hashsha = (text) => {
       return crypto.createHash("sha256").update(text).digest("base64");
