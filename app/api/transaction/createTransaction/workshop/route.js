@@ -10,6 +10,8 @@ export async function POST(request) {
   const IVString = process.env.IVSTRING;
   const IV = Buffer.from(IVString, "hex");
 
+  let transactionId;
+
   try {
     await connectToDatabase();
     const { userDetails, workshopId } = await request.json();
@@ -24,28 +26,28 @@ export async function POST(request) {
     }
 
     const generateUniqueTransactionId = async () => {
-      let transactionId;
+      let generatedId;
       let isUnique = false;
 
       while (!isUnique) {
-        transactionId = `TXN_YUK_WS_${Date.now()}_${Math.floor(
+        generatedId = `TXN_YUK_WS_${Date.now()}_${Math.floor(
           1000 + Math.random() * 9000
         )}`; // Ensures better uniqueness
 
         // Check if this transaction ID already exists
         const existingTransaction = await Transaction.findOne({
-          transactionId,
+          transactionId: generatedId,
         });
         if (!existingTransaction) {
           isUnique = true; // Exit loop if ID is unique
         }
       }
 
-      return transactionId;
+      return generatedId;
     };
 
     try {
-      const transactionId = await generateUniqueTransactionId(); // Ensure unique transaction ID
+      transactionId = await generateUniqueTransactionId(); // Assign to the outer variable
       console.log("Transaction ID:", transactionId);
 
       const transaction = new Transaction({
@@ -94,7 +96,7 @@ export async function POST(request) {
       name: userDetails.firstName,
       email: userDetails.email,
       categoryid: workshopId,
-      transactionid: transactionId,
+      txn_id: transactionId,
       fees: workshop.fees,
       returnurl: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/callback`,
       provider: 2,
@@ -106,7 +108,7 @@ export async function POST(request) {
       /\s/g,
       "$"
     )} email=${paymentParams.email} categoryid=10 transactionid=${
-      paymentParams.transactionId
+      paymentParams.txn_id
     } fees=${paymentParams.fees} returnurl=${
       paymentParams.returnurl
     } provider=2`;
