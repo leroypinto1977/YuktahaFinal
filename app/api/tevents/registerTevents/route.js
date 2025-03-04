@@ -45,28 +45,28 @@ export async function POST(request) {
       );
     }
 
-    // Create new event registration
-    const newEventRegistration = {
-      name: event.name,
-      eventid: eventId,
-      outer_Img: event.outer_Img,
-      paid: true,
-    };
+    // // Create new event registration
+    // const newEventRegistration = {
+    //   name: event.name,
+    //   eventid: eventId,
+    //   outer_Img: event.outer_Img,
+    //   paid: true,
+    // };
 
-    // Create transaction
-    const transactionId = `TE${eventId}_${Date.now()}`;
-    const transaction = new Transaction({
-      transactionId,
-      yuktahaId: userDetails.yuktahaId,
-      firstName: userDetails.firstName,
-      phoneNumber: userDetails.phoneNumber,
-      fees: event.fees,
-      event_type: "technical",
-      eventId: event.eventid,
-      email: userDetails.email,
-      freepass: false,
-    });
-    await transaction.save();
+    // // Create transaction
+    // const transactionId = `TE${eventId}_${Date.now()}`;
+    // const transaction = new Transaction({
+    //   transactionId,
+    //   yuktahaId: userDetails.yuktahaId,
+    //   firstName: userDetails.firstName,
+    //   phoneNumber: userDetails.phoneNumber,
+    //   fees: event.fees,
+    //   event_type: "technical",
+    //   eventId: event.eventid,
+    //   email: userDetails.email,
+    //   freepass: false,
+    // });
+    // await transaction.save();
 
     // Prepare participant data according to new schema
     const participantData = {

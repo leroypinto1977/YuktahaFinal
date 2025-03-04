@@ -210,8 +210,6 @@ export async function GET(req) {
     const decodedData = decodeURIComponent(encryptedData);
     const paymentData = decryptPaymentDataToJson(decodedData);
 
-    // return NextResponse.json(jsonData, { status: 200 });
-
     await connectToDatabase();
 
     console.log("Recieved Decrypted Payment Data: ", paymentData);
@@ -282,9 +280,9 @@ export async function GET(req) {
       { error: "Failed to process payment callback", message: error.message },
       { status: 500 }
     );
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_APP_URL}/registration/workshop/success`
-    );
+    // return NextResponse.redirect(
+    //   `${process.env.NEXT_PUBLIC_APP_URL}/registration/workshop/success`
+    // );
   }
 }
 

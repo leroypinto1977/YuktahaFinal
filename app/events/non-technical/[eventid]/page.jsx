@@ -42,9 +42,85 @@ const NonTechnicalEventDetail = () => {
     fetchEvent();
   }, [numericEventId]);
 
-  const handleEventRegistration = async (user, numericEventId, eventType) => {
+  // const handleEventRegistration = async (user, numericEventId, eventType) => {
+  //   try {
+  //     // First fetch user details
+  //     const userResponse = await fetch(
+  //       `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
+  //       { cache: "no-store" }
+  //     );
+
+  //     if (!userResponse.ok) {
+  //       const errorData = await userResponse.text();
+  //       throw new Error(`Failed to fetch user details: ${errorData}`);
+  //     }
+
+  //     const userDetails = await userResponse.json();
+
+  //     // Prepare event registration payload
+  //     const registrationPayload = {
+  //       userDetails: {
+  //         yuktahaId: userDetails.yuktahaId,
+  //         firstName: userDetails.firstName,
+  //         email: userDetails.email,
+  //         phoneNumber: userDetails.phoneNumber,
+  //         college: userDetails.college,
+  //       },
+  //       eventId: numericEventId,
+  //     };
+
+  //     // Register for event
+  //     const endpoint =
+  //       eventType === "technical"
+  //         ? "/api/tevents/registerTevents"
+  //         : "/api/ntevents/registerNTevents";
+
+  //     const eventResponse = await fetch(endpoint, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(registrationPayload),
+  //     });
+
+  //     // Parse response
+  //     const responseText = await eventResponse.text();
+  //     let eventData;
+  //     try {
+  //       eventData = JSON.parse(responseText);
+  //     } catch (e) {
+  //       console.error("Failed to parse response:", responseText);
+  //       throw new Error("Invalid response format");
+  //     }
+
+  //     if (eventResponse.ok) {
+  //       alert("Event registered successfully!");
+  //       return {
+  //         success: true,
+  //         message: "Event registered successfully!",
+  //         data: eventData,
+  //       };
+  //     } else {
+  //       alert(eventData.message || "Failed to register for event");
+  //       return {
+  //         success: false,
+  //         message: eventData.message,
+  //         error: eventData,
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.error("Error registering for event:", error);
+  //     alert("An error occurred while registering for the event.");
+  //     return {
+  //       success: false,
+  //       message: "An error occurred while registering for the event.",
+  //       error: error.message,
+  //     };
+  //   }
+  // };
+
+  const handleEventRegistration = async (user, numericEventId) => {
     try {
-      // First fetch user details
       const userResponse = await fetch(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
         { cache: "no-store" }
@@ -57,8 +133,9 @@ const NonTechnicalEventDetail = () => {
 
       const userDetails = await userResponse.json();
 
-      // Prepare event registration payload
-      const registrationPayload = {
+      console.log("userDetails");
+
+      const payload = {
         userDetails: {
           yuktahaId: userDetails.yuktahaId,
           firstName: userDetails.firstName,
@@ -69,53 +146,46 @@ const NonTechnicalEventDetail = () => {
         eventId: numericEventId,
       };
 
-      // Register for event
-      const endpoint =
-        eventType === "technical"
-          ? "/api/tevents/registerTevents"
-          : "/api/ntevents/registerNTevents";
+      console.log("Request Payload:", payload);
 
-      const eventResponse = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registrationPayload),
-      });
+      const transactionResponse = await fetch(
+        "/api/transaction/createTransaction/tevent",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
-      // Parse response
-      const responseText = await eventResponse.text();
-      let eventData;
-      try {
-        eventData = JSON.parse(responseText);
-      } catch (e) {
-        console.error("Failed to parse response:", responseText);
-        throw new Error("Invalid response format");
+      const transactionData = await transactionResponse.json();
+      if (!transactionResponse.ok) {
+        throw new Error(
+          transactionData.message || "Failed to create transaction"
+        );
       }
 
-      if (eventResponse.ok) {
-        alert("Event registered successfully!");
-        return {
-          success: true,
-          message: "Event registered successfully!",
-          data: eventData,
-        };
-      } else {
-        alert(eventData.message || "Failed to register for event");
-        return {
-          success: false,
-          message: eventData.message,
-          error: eventData,
-        };
-      }
+      const { paymentUrl } = transactionData;
+      window.location.href = paymentUrl;
     } catch (error) {
-      console.error("Error registering for event:", error);
-      alert("An error occurred while registering for the event.");
-      return {
-        success: false,
-        message: "An error occurred while registering for the event.",
-        error: error.message,
-      };
+      console.error("Error registering for workshop:", error);
+      // alert("An error occurred while registering for the workshop.");
+
+      showToast({
+        title: "Error!",
+        description: "An error occurred while registering for the workshop.",
+        variant: "destructive",
+        duration: 5000,
+        action: (
+          <ToastAction
+            altText="Dismiss"
+            onClick={() => console.log("Action clicked")}
+          >
+            Dismiss
+          </ToastAction>
+        ),
+      });
     }
   };
 

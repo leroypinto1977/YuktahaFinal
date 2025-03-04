@@ -1,5 +1,6 @@
-// app/api/transaction/createTransaction/workshop/route.js
+// app/api/transaction/createTransaction/tevent/route.js
 import { connectToDatabase } from "@/lib/mongodb";
+import { TEvent } from "@/models/EventDetails";
 import Transaction from "@/models/Transaction";
 import Workshop from "@/models/WorkshopDetails";
 import crypto from "crypto";
@@ -14,13 +15,13 @@ export async function POST(request) {
 
   try {
     await connectToDatabase();
-    const { userDetails, workshopId } = await request.json();
+    const { userDetails, eventId } = await request.json();
 
-    // Fetch workshop details using workshopid
-    const workshop = await Workshop.findOne({ workshopid: workshopId });
-    if (!workshop) {
+    // Fetch workshop details using eventId
+    const event = await TEvent.findOne({ eventid: eventId });
+    if (!event) {
       return NextResponse.json(
-        { message: "Workshop not found" },
+        { message: "Technical Event not found" },
         { status: 404 }
       );
     }
@@ -30,7 +31,7 @@ export async function POST(request) {
       let isUnique = false;
 
       while (!isUnique) {
-        generatedId = `TXN_YUK_WS_${Date.now()}_${Math.floor(
+        generatedId = `TXN_YUK_TE_${Date.now()}_${Math.floor(
           1000 + Math.random() * 9000
         )}`; // Ensures better uniqueness
 
@@ -56,8 +57,8 @@ export async function POST(request) {
         firstName: userDetails.firstName,
         phoneNumber: userDetails.phoneNumber,
         fees: workshop.fees,
-        event_type: "workshop",
-        eventId: workshopId,
+        event_type: "tevent",
+        eventId: eventId,
         email: userDetails.email,
         freepass: false,
         status: "initiated",
@@ -71,34 +72,14 @@ export async function POST(request) {
       throw error;
     }
 
-    // // Generate a unique transaction ID
-    // const transactionId = `TXN_YUK_WS_${Math.floor(Math.random() * 1000000)}`;
-    // console.log("Transaction ID", transactionId);
-
-    // // Create a new transaction
-    // const transaction = new Transaction({
-    //   transactionId,
-    //   yuktahaId: userDetails.yuktahaId,
-    //   firstName: userDetails.firstName,
-    //   phoneNumber: userDetails.phoneNumber,
-    //   fees: workshop.fees,
-    //   event_type: "workshop",
-    //   eventId: workshopId, // Use workshopId here
-    //   email: userDetails.email,
-    //   freepass: false,
-    //   status: "initiated",
-    // });
-
-    // await transaction.save();
-
     const paymentParams = {
       regid: userDetails.yuktahaId,
       name: userDetails.firstName,
       email: userDetails.email,
-      categoryid: workshopId,
+      categoryid: eventId,
       txn_id: transactionId,
-      fees: workshop.fees,
-      returnurl: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/workshop/callback`,
+      fees: event.fees,
+      returnurl: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/tevent/callback`,
       provider: 2,
     };
 
