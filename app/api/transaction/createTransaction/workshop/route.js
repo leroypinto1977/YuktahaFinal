@@ -140,7 +140,7 @@ export async function POST(request) {
     const encryptedParams = encryptData(raw);
 
     // Generate the payment URL
-    const paymentUrl = `https://cms.psgps.edu.in/testpayapp?payment=${encryptedParams}`;
+    const paymentUrl = `https://cms.psgps.edu.in/payapp?payment=${encryptedParams}`;
 
     return NextResponse.json({ paymentUrl }, { status: 200 });
   } catch (error) {
