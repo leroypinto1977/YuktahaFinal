@@ -495,7 +495,7 @@ export default function Profile() {
 
       console.log("Sending email with data:", emailData);
 
-      const emailRes = await fetch("/api/sendConfirmationEmail", {
+      const emailRes = await fetch("/api/email/sendConfirmationEmail", {
         method: "POST",
         body: JSON.stringify(emailData),
         headers: { "Content-Type": "application/json" },

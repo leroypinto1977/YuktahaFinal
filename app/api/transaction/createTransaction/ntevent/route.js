@@ -56,7 +56,7 @@ export async function POST(request) {
         yuktahaId: userDetails.yuktahaId,
         firstName: userDetails.firstName,
         phoneNumber: userDetails.phoneNumber,
-        fees: workshop.fees,
+        fees: event.fees,
         event_type: "ntevent",
         eventId: eventId,
         email: userDetails.email,

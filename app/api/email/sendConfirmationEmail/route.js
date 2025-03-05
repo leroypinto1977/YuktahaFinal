@@ -50,7 +50,7 @@ export async function POST(req) {
 
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: "leroysamuel@yuktaha.com", // Replace with your custom domain
+      from: "Yuktaha 2k25<noreply@yuktaha.com>", // Replace with your custom domain
       to: userData.email,
       subject: "Welcome to Yuktaha 2025 - Registration Confirmed!",
       react: await YuktahaConfirmationEmail(userData),

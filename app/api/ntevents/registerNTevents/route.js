@@ -184,13 +184,13 @@ export async function POST(request) {
       );
     }
 
-    // // Create new event registration
-    // const newEventRegistration = {
-    //   name: event.name,
-    //   eventid: eventId,
-    //   outer_Img: event.outer_Img,
-    //   paid: true,
-    // };
+    // Create new event registration
+    const newEventRegistration = {
+      name: event.name,
+      eventid: eventId,
+      outer_Img: event.outer_Img,
+      paid: true,
+    };
 
     // // Create transaction
     // const transactionId = `NTE${eventId}_${Date.now()}`; // Changed from TE to NTE

@@ -66,6 +66,15 @@ export async function POST(request) {
       paid: true,
     };
 
+    const mailParameters = {
+      email: userDetails.email,
+      yuktahId: userDetails.yuktahaId,
+      eventType: "Workshop",
+      eventId: workshopId,
+      transactionId: transactionId,
+      firstName: userDetails.firstName,
+    };
+
     // Update workshop details with new participant and counts
     const updatedWorkshop = await Workshop.findOneAndUpdate(
       { workshopid: workshopId },

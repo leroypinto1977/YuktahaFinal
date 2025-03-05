@@ -71,25 +71,25 @@ function FooterMain() {
                 Home
               </a>
               <a
-                href="#"
+                href="/workshops"
                 className="block transition-colors hover:text-primary"
               >
                 Wokshops
               </a>
               <a
-                href="#"
+                href="/events"
                 className="block transition-colors hover:text-primary"
               >
                 Events
               </a>
               <a
-                href="#"
+                href="/dev-team"
                 className="block transition-colors hover:text-primary"
               >
                 Dev Team
               </a>
               <a
-                href="#"
+                href="/help-me"
                 className="block transition-colors hover:text-primary"
               >
                 Contact
@@ -100,9 +100,9 @@ function FooterMain() {
             <h3 className="mb-4 text-lg font-semibold">Location</h3>
             <address className="space-y-2 text-sm not-italic">
               <p>PSG iTech</p>
-              <p>Coimbatore</p>
-              <p>Phone: +91 93446 27455</p>
-              <p>Email: leroypinto1977@gmail.com</p>
+              <p>Neelambur, Coimbatore</p>
+              {/* <p>Phone: +91 93446 27455</p>
+              <p>Email: leroypinto1977@gmail.com</p> */}
             </address>
           </div>
           <div className="relative">

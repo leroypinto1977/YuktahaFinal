@@ -149,7 +149,7 @@ const NonTechnicalEventDetail = () => {
       console.log("Request Payload:", payload);
 
       const transactionResponse = await fetch(
-        "/api/transaction/createTransaction/tevent",
+        "/api/transaction/createTransaction/ntevent",
         {
           method: "POST",
           headers: {

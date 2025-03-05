@@ -68,6 +68,11 @@ const WorkshopGroups = () => {
       name: "Civil Engineering & Geographic Data",
       image: "/workshop/groups/7.png",
     },
+    {
+      id: 8,
+      name: "Mechanical",
+      image: "/workshop/groups/7.png",
+    },
   ];
 
   useEffect(() => {
@@ -182,7 +187,7 @@ const WorkshopGroups = () => {
               </div>
 
               {/* Bottom row - 3 cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto w-full max-w-[75%]">
                   {groups.slice(4).map((group, index) => (
                     <WorkshopCard
@@ -192,6 +197,15 @@ const WorkshopGroups = () => {
                     />
                   ))}
                 </div>
+              </div> */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                {groups.slice(4).map((group, index) => (
+                  <WorkshopCard
+                    key={group.id}
+                    group={group}
+                    index={index + 4}
+                  />
+                ))}
               </div>
             </div>
           )}
