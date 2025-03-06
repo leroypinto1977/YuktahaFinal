@@ -3,6 +3,10 @@
 import Navbar from "@/components/Navbar";
 import { BackgroundBeams } from "@/components/acertinity_ui/background-beams.jsx";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import {
+  RegisterLink,
+  LoginLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 import { useParams } from "next/navigation";
 import React from "react";
 
@@ -11,7 +15,7 @@ const TechnicalEventDetail = () => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
-  const { user } = useKindeBrowserClient();
+  const { user, isAuthenticated } = useKindeBrowserClient();
 
   const { eventid } = useParams();
   const numericEventId = eventid ? parseInt(eventid, 10) : null;
@@ -453,7 +457,7 @@ const TechnicalEventDetail = () => {
             </div>
           </div>
 
-          <div className="mt-8">
+          {/* <div className="mt-8">
             <button
               disabled={!event.open}
               onClick={() =>
@@ -471,6 +475,46 @@ const TechnicalEventDetail = () => {
                 ? "Event Full"
                 : "Register Now"}
             </button>
+          </div> */}
+          <div className="mt-8">
+            {!isAuthenticated && (
+              <LoginLink>
+                <button
+                  disabled={!workshop.open}
+                  onClick={() => handleRegister(user, numericWorkshopId)}
+                  className={`px-8 py-3 rounded-lg text-white transition-opacity ${
+                    workshop.open && workshop.availability > 0
+                      ? "bg-gradient-to-l from-[#3282b8] to-[#f05454] hover:opacity-90"
+                      : "bg-gray-600 cursor-not-allowed"
+                  }`}
+                >
+                  {!workshop.open
+                    ? "Registration Closed"
+                    : workshop.availability === 0
+                    ? "Workshop Full"
+                    : "Register Now"}
+                </button>
+              </LoginLink>
+            )}
+          </div>
+          <div className="mt-8">
+            {isAuthenticated && (
+              <button
+                disabled={!workshop.open}
+                onClick={() => handleRegister(user, numericWorkshopId)}
+                className={`px-8 py-3 rounded-lg text-white transition-opacity ${
+                  workshop.open && workshop.availability > 0
+                    ? "bg-gradient-to-l from-[#3282b8] to-[#f05454] hover:opacity-90"
+                    : "bg-gray-600 cursor-not-allowed"
+                }`}
+              >
+                {!workshop.open
+                  ? "Registration Closed"
+                  : workshop.availability === 0
+                  ? "Workshop Full"
+                  : "Register Now"}
+              </button>
+            )}
           </div>
         </div>
       </div>
