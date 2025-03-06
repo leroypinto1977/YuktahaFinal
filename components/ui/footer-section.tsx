@@ -20,6 +20,7 @@ import {
   Sun,
   Twitter,
 } from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 
 function FooterMain() {
@@ -64,36 +65,36 @@ function FooterMain() {
           <div>
             <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
             <nav className="space-y-2 text-sm">
-              <a
+              <Link
                 href="/"
                 className="block transition-colors hover:text-primary"
               >
                 Home
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/workshops"
                 className="block transition-colors hover:text-primary"
               >
                 Wokshops
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/events"
                 className="block transition-colors hover:text-primary"
               >
                 Events
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/dev-team"
                 className="block transition-colors hover:text-primary"
               >
                 Dev Team
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/help-me"
                 className="block transition-colors hover:text-primary"
               >
                 Contact
-              </a>
+              </Link>
             </nav>
           </div>
           <div>
@@ -142,6 +143,7 @@ function FooterMain() {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -159,6 +161,7 @@ function FooterMain() {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -216,14 +219,16 @@ function FooterMain() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="rounded-full"
-                    >
-                      <Instagram className="h-4 w-4" />
-                      <span className="sr-only">Instagram</span>
-                    </Button>
+                    <Link href="https://www.instagram.com/leroy_samue1?igsh=cXZrY3J3dXA0Zmoy">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="rounded-full"
+                      >
+                        <Instagram className="h-4 w-4" />
+                        <span className="sr-only">Instagram</span>
+                      </Button>
+                    </Link>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Follow us on Instagram</p>
