@@ -227,9 +227,21 @@ export async function GET(req) {
       );
     }
 
+    console.log("Workshop Debugging...");
+
+    console.log("Before Transaction: ", transaction.status);
+
     // Update the transaction status
     transaction.status = paymentData.status === 1 ? "success" : "failed";
     await transaction.save();
+
+    console.log("After Transaction: ", transaction.status);
+    console.log(
+      "After Saving - Retrieval from paymentData: ",
+      paymentData.status
+    );
+
+    console.log("Workshop Debugging...");
 
     console.log("Yuktaha ID: ", paymentData.yuktahaId);
     console.log("Transaction ID: ", paymentData.transactionid);
