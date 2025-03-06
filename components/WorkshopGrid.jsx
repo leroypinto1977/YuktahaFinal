@@ -406,10 +406,12 @@ const WorkshopGrid = ({
     const fetchWorkshops = async () => {
       try {
         const response = await fetch(`/api/workshop/getGroup/${groupId}`, {
+          method: "GET",
           headers: {
             "x-api-key": process.env.API_KEY, // Read from env
           },
         });
+
         if (!response.ok) {
           throw new Error("Failed to fetch workshops");
         }

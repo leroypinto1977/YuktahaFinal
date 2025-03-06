@@ -83,6 +83,7 @@ const WorkshopGroups = () => {
           const response = await fetch(
             `/api/workshop/getGroup/${selectedGroup.id}`,
             {
+              method: "GET",
               headers: {
                 "x-api-key": process.env.API_KEY, // Read from env
               },

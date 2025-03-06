@@ -403,6 +403,7 @@ const EventGroups = () => {
           const response = await fetch(
             `/api/tevents/getGroup/${selectedGroup.id}`,
             {
+              method: "GET",
               headers: {
                 "x-api-key": process.env.API_KEY, // Read from env
               },

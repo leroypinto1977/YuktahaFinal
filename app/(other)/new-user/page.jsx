@@ -430,6 +430,7 @@ export default function Profile() {
         try {
           // Create an API endpoint to check user existence or use an existing one
           const response = await fetch(`/api/checkUser?email=${user.email}`, {
+            method: "GET",
             headers: {
               "x-api-key": process.env.API_KEY, // Read from env
             },

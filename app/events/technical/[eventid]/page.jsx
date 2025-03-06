@@ -24,6 +24,7 @@ const TechnicalEventDetail = () => {
         const response = await fetch(
           `/api/tevents/getTevents?eventId=${numericEventId}`,
           {
+            method: "GET",
             headers: {
               "x-api-key": process.env.API_KEY, // Read from env
             },
@@ -138,6 +139,7 @@ const TechnicalEventDetail = () => {
       const userResponse = await fetch(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
         {
+          method: "GET",
           cache: "no-store",
           headers: {
             "x-api-key": process.env.API_KEY, // Read from env

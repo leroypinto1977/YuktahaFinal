@@ -198,6 +198,7 @@ const WorkshopProfileDetail = () => {
         const userResponse = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
           {
+            method: "GET",
             cache: "no-store",
             headers: {
               "x-api-key": process.env.API_KEY, // Read from env
@@ -223,6 +224,7 @@ const WorkshopProfileDetail = () => {
         const workshopResponse = await fetch(
           `/api/workshop/getWorkshop?workshopId=${numericEventId}`,
           {
+            method: "GET",
             headers: {
               "x-api-key": process.env.API_KEY, // Read from env
             },

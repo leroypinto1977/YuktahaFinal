@@ -23,6 +23,7 @@ const NonTechnicalEventProfileDetail = () => {
         const userResponse = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
           {
+            method: "GET",
             cache: "no-store",
             headers: {
               "x-api-key": process.env.API_KEY, // Read from env
@@ -51,6 +52,7 @@ const NonTechnicalEventProfileDetail = () => {
         const eventResponse = await fetch(
           `/api/ntevents/getNTevents?eventId=${numericEventId}`,
           {
+            method: "GET",
             headers: {
               "x-api-key": process.env.API_KEY, // Read from env
             },
