@@ -457,18 +457,24 @@ const NonTechnicalEventDetail = () => {
             {!isAuthenticated && (
               <LoginLink>
                 <button
-                  disabled={!workshop.open}
-                  onClick={() => handleRegister(user, numericWorkshopId)}
+                  disabled={!event.open}
+                  onClick={() =>
+                    handleEventRegistration(
+                      user,
+                      numericEventId,
+                      "non-technical"
+                    )
+                  }
                   className={`px-8 py-3 rounded-lg text-white transition-opacity ${
-                    workshop.open && workshop.availability > 0
-                      ? "bg-gradient-to-l from-[#3282b8] to-[#f05454] hover:opacity-90"
+                    event.open && event.availability > 0
+                      ? "bg-gradient-to-l from-[rgb(50,130,184)] to-[#f05454] hover:opacity-90"
                       : "bg-gray-600 cursor-not-allowed"
                   }`}
                 >
-                  {!workshop.open
+                  {!event.open
                     ? "Registration Closed"
-                    : workshop.availability === 0
-                    ? "Workshop Full"
+                    : event.availability === 0
+                    ? "Event Full"
                     : "Register Now"}
                 </button>
               </LoginLink>
@@ -477,18 +483,20 @@ const NonTechnicalEventDetail = () => {
           <div className="mt-8">
             {isAuthenticated && (
               <button
-                disabled={!workshop.open}
-                onClick={() => handleRegister(user, numericWorkshopId)}
+                disabled={!event.open}
+                onClick={() =>
+                  handleEventRegistration(user, numericEventId, "non-technical")
+                }
                 className={`px-8 py-3 rounded-lg text-white transition-opacity ${
-                  workshop.open && workshop.availability > 0
-                    ? "bg-gradient-to-l from-[#3282b8] to-[#f05454] hover:opacity-90"
+                  event.open && event.availability > 0
+                    ? "bg-gradient-to-l from-[rgb(50,130,184)] to-[#f05454] hover:opacity-90"
                     : "bg-gray-600 cursor-not-allowed"
                 }`}
               >
-                {!workshop.open
+                {!event.open
                   ? "Registration Closed"
-                  : workshop.availability === 0
-                  ? "Workshop Full"
+                  : event.availability === 0
+                  ? "Event Full"
                   : "Register Now"}
               </button>
             )}

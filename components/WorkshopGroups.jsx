@@ -71,7 +71,7 @@ const WorkshopGroups = () => {
     {
       id: 8,
       name: "Mechanical",
-      image: "/workshop/groups/7.png",
+      image: "/workshop/groups/8.png",
     },
   ];
 

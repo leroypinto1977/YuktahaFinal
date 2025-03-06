@@ -177,6 +177,77 @@ function FooterMain() {
                 </Tooltip>
               </TooltipProvider>
             </div>
+            <h3 className="mb-4 text-lg font-semibold">Made By Leroy Samuel</h3>
+            <div className="mb-6 flex space-x-4">
+              {/* <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="rounded-full"
+                    >
+                      <Facebook className="h-4 w-4" />
+                      <span className="sr-only">Facebook</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Follow us on Facebook</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="rounded-full"
+                    >
+                      <Twitter className="h-4 w-4" />
+                      <span className="sr-only">Twitter</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Follow us on Twitter</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider> */}
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="rounded-full"
+                    >
+                      <Instagram className="h-4 w-4" />
+                      <span className="sr-only">Instagram</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Follow us on Instagram</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="rounded-full"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                      <span className="sr-only">LinkedIn</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Connect with us on LinkedIn</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             {/* <div className="flex items-center space-x-2">
               <Sun className="h-4 w-4" />
               <Switch
