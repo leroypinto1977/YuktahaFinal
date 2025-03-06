@@ -2,17 +2,17 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Workshop from "@/models/WorkshopDetails";
 
 export async function POST(req, res) {
-  const API_KEY = process.env.API_KEY; // Store API key in environment variable
+  // const API_KEY = process.env.API_KEY; // Store API key in environment variable
 
-  const apiKey = req.headers.get("x-api-key");
+  // const apiKey = req.headers.get("x-api-key");
 
-  // Validate API key
-  if (!apiKey || apiKey !== process.env.API_KEY) {
-    return Response.json(
-      { success: false, error: "Unauthorized" },
-      { status: 401 }
-    );
-  }
+  // // Validate API key
+  // if (!apiKey || apiKey !== process.env.API_KEY) {
+  //   return Response.json(
+  //     { success: false, error: "Unauthorized" },
+  //     { status: 401 }
+  //   );
+  // }
 
   await connectToDatabase();
 
@@ -29,14 +29,14 @@ export async function POST(req, res) {
 }
 
 export async function GET(req, res) {
-  const API_KEY = process.env.API_KEY; // Store API key in environment variable
+  // const API_KEY = process.env.API_KEY; // Store API key in environment variable
 
-  // Get API key from request headers
-  const apiKey = req.headers["x-api-key"];
+  // // Get API key from request headers
+  // const apiKey = req.headers["x-api-key"];
 
-  if (!apiKey || apiKey !== API_KEY) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  // if (!apiKey || apiKey !== API_KEY) {
+  //   return res.status(401).json({ message: "Unauthorized" });
+  // }
 
   await connectToDatabase();
 

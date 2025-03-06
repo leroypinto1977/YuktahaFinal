@@ -18,15 +18,15 @@ export async function GET(req, { params }) {
   // }
 
   try {
-    const apiKey = req.headers.get("x-api-key");
+    // const apiKey = req.headers.get("x-api-key");
 
-    // Validate API key
-    if (!apiKey || apiKey !== process.env.API_KEY) {
-      return Response.json(
-        { success: false, error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+    // // Validate API key
+    // if (apiKey !== process.env.API_KEY) {
+    //   return Response.json(
+    //     { success: false, error: "Unauthorized" },
+    //     { status: 401 }
+    //   );
+    // }
     // Extract the groupId from the URL parameters
     const groupId = params.groupId;
 

@@ -144,14 +144,14 @@ import { NextResponse } from "next/server";
 
 export async function POST(request, res) {
   try {
-    const API_KEY = process.env.API_KEY; // Store API key in environment variable
+    // const API_KEY = process.env.API_KEY; // Store API key in environment variable
 
-    // Get API key from request headers
-    const apiKey = request.headers["x-api-key"];
+    // // Get API key from request headers
+    // const apiKey = request.headers["x-api-key"];
 
-    if (!apiKey || apiKey !== API_KEY) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
+    // if (!apiKey || apiKey !== API_KEY) {
+    //   return res.status(401).json({ message: "Unauthorized" });
+    // }
 
     await connectToDatabase();
     const body = await request.json();

@@ -431,9 +431,9 @@ export default function Profile() {
           // Create an API endpoint to check user existence or use an existing one
           const response = await fetch(`/api/checkUser?email=${user.email}`, {
             method: "GET",
-            headers: {
-              "x-api-key": process.env.API_KEY, // Read from env
-            },
+            // headers: {
+            //   "x-api-key": process.env.API_KEY, // Read from env
+            // },
           });
           const data = await response.json();
 
@@ -469,9 +469,12 @@ export default function Profile() {
       const registerRes = await fetch("/api/updateUser", {
         method: "POST",
         body: JSON.stringify(updatedFormData),
+        // headers: {
+        //   "Content-Type": "application/json",
+        //   "x-api-key": process.env.API_KEY,
+        // },
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.API_KEY,
         },
       });
 

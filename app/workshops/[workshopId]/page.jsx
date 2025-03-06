@@ -3,6 +3,10 @@
 import Navbar from "@/components/Navbar";
 import { BackgroundBeams } from "@/components/acertinity_ui/background-beams.jsx";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import {
+  RegisterLink,
+  LoginLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 import { useParams } from "next/navigation";
 import React from "react";
 
@@ -11,7 +15,7 @@ const WorkshopDetail = () => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
-  const { user } = useKindeBrowserClient();
+  const { user, isAuthenticated } = useKindeBrowserClient();
 
   const { workshopId } = useParams();
   const numericWorkshopId = workshopId ? parseInt(workshopId, 10) : null;
@@ -25,9 +29,9 @@ const WorkshopDetail = () => {
           `/api/workshop/getWorkshop?workshopId=${numericWorkshopId}`,
           {
             method: "GET",
-            headers: {
-              "x-api-key": process.env.API_KEY, // Read from env
-            },
+            // headers: {
+            //   "x-api-key": process.env.API_KEY, // Read from env
+            // },
           }
         );
         if (!response.ok) {
@@ -170,9 +174,9 @@ const WorkshopDetail = () => {
         {
           method: "GET",
           cache: "no-store",
-          headers: {
-            "x-api-key": process.env.API_KEY, // Read from env
-          },
+          // headers: {
+          //   "x-api-key": process.env.API_KEY, // Read from env
+          // },
         }
       );
 
@@ -204,7 +208,7 @@ const WorkshopDetail = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": process.env.API_KEY,
+            // "x-api-key": process.env.API_KEY,
           },
           body: JSON.stringify(payload),
         }
@@ -404,6 +408,46 @@ const WorkshopDetail = () => {
           </div>
 
           <div className="mt-8">
+            {!isAuthenticated && (
+              <LoginLink>
+                <button
+                  disabled={!workshop.open}
+                  onClick={() => handleRegister(user, numericWorkshopId)}
+                  className={`px-8 py-3 rounded-lg text-white transition-opacity ${
+                    workshop.open && workshop.availability > 0
+                      ? "bg-gradient-to-l from-[#3282b8] to-[#f05454] hover:opacity-90"
+                      : "bg-gray-600 cursor-not-allowed"
+                  }`}
+                >
+                  {!workshop.open
+                    ? "Registration Closed"
+                    : workshop.availability === 0
+                    ? "Workshop Full"
+                    : "Register Now"}
+                </button>
+              </LoginLink>
+            )}
+          </div>
+          <div className="mt-8">
+            {isAuthenticated && (
+              <button
+                disabled={!workshop.open}
+                onClick={() => handleRegister(user, numericWorkshopId)}
+                className={`px-8 py-3 rounded-lg text-white transition-opacity ${
+                  workshop.open && workshop.availability > 0
+                    ? "bg-gradient-to-l from-[#3282b8] to-[#f05454] hover:opacity-90"
+                    : "bg-gray-600 cursor-not-allowed"
+                }`}
+              >
+                {!workshop.open
+                  ? "Registration Closed"
+                  : workshop.availability === 0
+                  ? "Workshop Full"
+                  : "Register Now"}
+              </button>
+            )}
+          </div>
+          {/* <div className="mt-8">
             <button
               disabled={!workshop.open}
               onClick={() => handleRegister(user, numericWorkshopId)}
@@ -419,7 +463,7 @@ const WorkshopDetail = () => {
                 ? "Workshop Full"
                 : "Register Now"}
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

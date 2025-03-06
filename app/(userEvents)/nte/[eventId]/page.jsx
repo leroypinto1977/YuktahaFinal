@@ -25,9 +25,9 @@ const NonTechnicalEventProfileDetail = () => {
           {
             method: "GET",
             cache: "no-store",
-            headers: {
-              "x-api-key": process.env.API_KEY, // Read from env
-            },
+            // headers: {
+            //   "x-api-key": process.env.API_KEY, // Read from env
+            // },
           }
         );
 
@@ -53,9 +53,9 @@ const NonTechnicalEventProfileDetail = () => {
           `/api/ntevents/getNTevents?eventId=${numericEventId}`,
           {
             method: "GET",
-            headers: {
-              "x-api-key": process.env.API_KEY, // Read from env
-            },
+            // headers: {
+            //   "x-api-key": process.env.API_KEY, // Read from env
+            // },
           }
         );
 

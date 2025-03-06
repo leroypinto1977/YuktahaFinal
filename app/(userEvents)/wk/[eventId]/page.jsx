@@ -200,9 +200,9 @@ const WorkshopProfileDetail = () => {
           {
             method: "GET",
             cache: "no-store",
-            headers: {
-              "x-api-key": process.env.API_KEY, // Read from env
-            },
+            // headers: {
+            //   "x-api-key": process.env.API_KEY, // Read from env
+            // },
           }
         );
 
@@ -225,9 +225,9 @@ const WorkshopProfileDetail = () => {
           `/api/workshop/getWorkshop?workshopId=${numericEventId}`,
           {
             method: "GET",
-            headers: {
-              "x-api-key": process.env.API_KEY, // Read from env
-            },
+            // headers: {
+            //   "x-api-key": process.env.API_KEY, // Read from env
+            // },
           }
         );
 

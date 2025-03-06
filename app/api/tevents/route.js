@@ -7,15 +7,15 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   await connectToDatabase();
   try {
-    const apiKey = req.headers.get("x-api-key");
+    // const apiKey = req.headers.get("x-api-key");
 
-    // Validate API key
-    if (!apiKey || apiKey !== process.env.API_KEY) {
-      return Response.json(
-        { success: false, error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+    // // Validate API key
+    // if (!apiKey || apiKey !== process.env.API_KEY) {
+    //   return Response.json(
+    //     { success: false, error: "Unauthorized" },
+    //     { status: 401 }
+    //   );
+    // }
 
     const body = await req.json();
     const event = await TEvent.create(body);
@@ -31,14 +31,14 @@ export async function POST(req) {
 export async function GET() {
   await connectToDatabase();
   try {
-    const API_KEY = process.env.API_KEY; // Store API key in environment variable
+    // const API_KEY = process.env.API_KEY; // Store API key in environment variable
 
-    // Get API key from request headers
-    const apiKey = req.headers["x-api-key"];
+    // // Get API key from request headers
+    // const apiKey = req.headers["x-api-key"];
 
-    if (!apiKey || apiKey !== API_KEY) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
+    // if (!apiKey || apiKey !== API_KEY) {
+    //   return res.status(401).json({ message: "Unauthorized" });
+    // }
 
     const events = await TEvent.find(
       {},

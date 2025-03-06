@@ -93,9 +93,9 @@ const Profile = async () => {
       {
         method: "GET",
         cache: "no-store",
-        headers: {
-          "x-api-key": process.env.API_KEY, // Read from env
-        },
+        // headers: {
+        //   "x-api-key": process.env.API_KEY, // Read from env
+        // },
       }
     );
 

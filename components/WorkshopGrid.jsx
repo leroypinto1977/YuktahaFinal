@@ -407,9 +407,9 @@ const WorkshopGrid = ({
       try {
         const response = await fetch(`/api/workshop/getGroup/${groupId}`, {
           method: "GET",
-          headers: {
-            "x-api-key": process.env.API_KEY, // Read from env
-          },
+          // headers: {
+          //   "x-api-key": process.env.API_KEY, // Read from env
+          // },
         });
 
         if (!response.ok) {

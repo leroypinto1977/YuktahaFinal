@@ -404,9 +404,9 @@ const EventGroups = () => {
             `/api/tevents/getGroup/${selectedGroup.id}`,
             {
               method: "GET",
-              headers: {
-                "x-api-key": process.env.API_KEY, // Read from env
-              },
+              // headers: {
+              //   "x-api-key": process.env.API_KEY, // Read from env
+              // },
             }
           );
           const data = await response.json();

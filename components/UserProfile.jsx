@@ -215,9 +215,9 @@ const UserProfile = ({ user, userDetails: initialUserDetails }) => {
         {
           method: "GET",
           cache: "no-store",
-          headers: {
-            "x-api-key": process.env.API_KEY, // Read from env
-          },
+          // headers: {
+          //   "x-api-key": process.env.API_KEY, // Read from env
+          // },
         }
       );
 
@@ -242,7 +242,7 @@ const UserProfile = ({ user, userDetails: initialUserDetails }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.API_KEY,
+          // "x-api-key": process.env.API_KEY,
         },
         body: JSON.stringify({
           email: user.email,

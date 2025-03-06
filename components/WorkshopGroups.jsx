@@ -84,9 +84,9 @@ const WorkshopGroups = () => {
             `/api/workshop/getGroup/${selectedGroup.id}`,
             {
               method: "GET",
-              headers: {
-                "x-api-key": process.env.API_KEY, // Read from env
-              },
+              // headers: {
+              //   "x-api-key": process.env.API_KEY,
+              // },
             }
           );
           if (!response.ok) {

@@ -28,17 +28,17 @@ export async function GET(request) {
   try {
     await connectToDatabase();
 
-    const API_KEY = process.env.API_KEY; // Store API key in environment variable
+    // const API_KEY = process.env.API_KEY; // Store API key in environment variable
 
-    const apiKey = req.headers.get("x-api-key");
+    // const apiKey = req.headers.get("x-api-key");
 
-    // Validate API key
-    if (!apiKey || apiKey !== process.env.API_KEY) {
-      return Response.json(
-        { success: false, error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+    // // Validate API key
+    // if (!apiKey || apiKey !== process.env.API_KEY) {
+    //   return Response.json(
+    //     { success: false, error: "Unauthorized" },
+    //     { status: 401 }
+    //   );
+    // }
 
     // Get email from the URL using searchParams
     const { searchParams } = new URL(request.url);
