@@ -81,7 +81,12 @@ const WorkshopGroups = () => {
         setLoading(true);
         try {
           const response = await fetch(
-            `/api/workshop/getGroup/${selectedGroup.id}`
+            `/api/workshop/getGroup/${selectedGroup.id}`,
+            {
+              headers: {
+                "x-api-key": process.env.API_KEY, // Read from env
+              },
+            }
           );
           if (!response.ok) {
             throw new Error("Failed to fetch workshops");

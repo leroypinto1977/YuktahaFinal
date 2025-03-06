@@ -27,6 +27,18 @@ import { connectToDatabase } from "@/lib/mongodb";
 import UserDetails from "@/models/UserDetails";
 
 export async function GET(req) {
+  const API_KEY = process.env.API_KEY; // Store API key in environment variable
+
+  const apiKey = req.headers.get("x-api-key");
+
+  // Validate API key
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return Response.json(
+      { success: false, error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
   try {
     const { email } = await req.json(); // 🔥 Get the email from the request body
 

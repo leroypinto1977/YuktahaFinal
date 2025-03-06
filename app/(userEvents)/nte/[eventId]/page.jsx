@@ -22,7 +22,12 @@ const NonTechnicalEventProfileDetail = () => {
         // First fetch user details to check registration
         const userResponse = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
-          { cache: "no-store" }
+          {
+            cache: "no-store",
+            headers: {
+              "x-api-key": process.env.API_KEY, // Read from env
+            },
+          }
         );
 
         if (!userResponse.ok) {
@@ -44,7 +49,12 @@ const NonTechnicalEventProfileDetail = () => {
 
         // If registered, fetch event details
         const eventResponse = await fetch(
-          `/api/ntevents/getNTevents?eventId=${numericEventId}`
+          `/api/ntevents/getNTevents?eventId=${numericEventId}`,
+          {
+            headers: {
+              "x-api-key": process.env.API_KEY, // Read from env
+            },
+          }
         );
 
         if (!eventResponse.ok) {

@@ -90,7 +90,12 @@ const Profile = async () => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
-      { cache: "no-store" }
+      {
+        cache: "no-store",
+        headers: {
+          "x-api-key": process.env.API_KEY, // Read from env
+        },
+      }
     );
 
     if (!response.ok) {

@@ -5,6 +5,18 @@ import { NextResponse } from "next/server";
 
 // ntevents/route.js
 export async function POST(req) {
+  const API_KEY = process.env.API_KEY; // Store API key in environment variable
+
+  const apiKey = req.headers.get("x-api-key");
+
+  // Validate API key
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return Response.json(
+      { success: false, error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
   await connectToDatabase();
   try {
     const body = await req.json();
@@ -18,7 +30,16 @@ export async function POST(req) {
   }
 }
 
-export async function GET() {
+export async function GET(req, res) {
+  const API_KEY = process.env.API_KEY; // Store API key in environment variable
+
+  // Get API key from request headers
+  const apiKey = req.headers["x-api-key"];
+
+  if (!apiKey || apiKey !== API_KEY) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
   await connectToDatabase();
   try {
     const events = await NTEvent.find(

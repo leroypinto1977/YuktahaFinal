@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     // Connect to the database
+
     await connectToDatabase();
 
     // Parse the request body

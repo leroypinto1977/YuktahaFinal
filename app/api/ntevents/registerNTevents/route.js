@@ -142,8 +142,17 @@ import { NextResponse } from "next/server";
 
 // Add this import
 
-export async function POST(request) {
+export async function POST(request, res) {
   try {
+    const API_KEY = process.env.API_KEY; // Store API key in environment variable
+
+    // Get API key from request headers
+    const apiKey = request.headers["x-api-key"];
+
+    if (!apiKey || apiKey !== API_KEY) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     await connectToDatabase();
     const body = await request.json();
 

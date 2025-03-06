@@ -24,7 +24,12 @@ const NonTechnicalEventDetail = () => {
     const fetchEvent = async () => {
       try {
         const response = await fetch(
-          `/api/ntevents/getNTevents?eventId=${numericEventId}`
+          `/api/ntevents/getNTevents?eventId=${numericEventId}`,
+          {
+            headers: {
+              "x-api-key": process.env.API_KEY, // Read from env
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Event not found");
@@ -123,7 +128,12 @@ const NonTechnicalEventDetail = () => {
     try {
       const userResponse = await fetch(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
-        { cache: "no-store" }
+        {
+          cache: "no-store",
+          headers: {
+            "x-api-key": process.env.API_KEY, // Read from env
+          },
+        }
       );
 
       if (!userResponse.ok) {
@@ -154,6 +164,7 @@ const NonTechnicalEventDetail = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "x-api-key": process.env.API_KEY,
           },
           body: JSON.stringify(payload),
         }

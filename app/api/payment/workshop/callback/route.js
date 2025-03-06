@@ -259,6 +259,7 @@ export async function GET(req) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-api-key": process.env.API_KEY,
         },
         body: JSON.stringify(registrationPayload),
       }
@@ -267,10 +268,6 @@ export async function GET(req) {
     const responseText = await workshopResponse.text();
     console.log("Workshop Response: ", responseText);
 
-    // return NextResponse.json(
-    //   { message: "Payment status updated successfully" },
-    //   { status: 200 }
-    // );
     return NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_APP_URL}/registration/workshop/success`
     );

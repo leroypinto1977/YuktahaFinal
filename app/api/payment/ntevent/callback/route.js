@@ -101,7 +101,9 @@ export async function GET(req) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-api-key": process.env.API_KEY,
         },
+
         body: JSON.stringify(registrationPayload),
       }
     );

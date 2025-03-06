@@ -13,6 +13,16 @@ export async function POST(request) {
 
   let transactionId;
 
+  const apiKey = request.headers.get("x-api-key");
+
+  // Validate API key
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return Response.json(
+      { success: false, error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
   try {
     await connectToDatabase();
     const { userDetails, eventId } = await request.json();

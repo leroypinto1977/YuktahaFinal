@@ -208,7 +208,18 @@ const UserProfile = ({ user, userDetails: initialUserDetails }) => {
 
   const refreshUserDetails = async () => {
     try {
-      const response = await fetch(`/api/getUser?email=${user.email}`);
+      // const response = await fetch(`/api/getUser?email=${user.email}`);
+
+      const userResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
+        {
+          cache: "no-store",
+          headers: {
+            "x-api-key": process.env.API_KEY, // Read from env
+          },
+        }
+      );
+
       if (response.ok) {
         const updatedDetails = await response.json();
         setUserDetails(updatedDetails);
@@ -230,6 +241,7 @@ const UserProfile = ({ user, userDetails: initialUserDetails }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-api-key": process.env.API_KEY,
         },
         body: JSON.stringify({
           email: user.email,

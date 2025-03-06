@@ -197,7 +197,12 @@ const WorkshopProfileDetail = () => {
       try {
         const userResponse = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
-          { cache: "no-store" }
+          {
+            cache: "no-store",
+            headers: {
+              "x-api-key": process.env.API_KEY, // Read from env
+            },
+          }
         );
 
         if (!userResponse.ok) {
@@ -216,7 +221,12 @@ const WorkshopProfileDetail = () => {
         }
 
         const workshopResponse = await fetch(
-          `/api/workshop/getWorkshop?workshopId=${numericEventId}`
+          `/api/workshop/getWorkshop?workshopId=${numericEventId}`,
+          {
+            headers: {
+              "x-api-key": process.env.API_KEY, // Read from env
+            },
+          }
         );
 
         if (!workshopResponse.ok) {

@@ -401,7 +401,12 @@ const EventGroups = () => {
         setLoading(true);
         try {
           const response = await fetch(
-            `/api/tevents/getGroup/${selectedGroup.id}`
+            `/api/tevents/getGroup/${selectedGroup.id}`,
+            {
+              headers: {
+                "x-api-key": process.env.API_KEY, // Read from env
+              },
+            }
           );
           const data = await response.json();
           if (!response.ok) {

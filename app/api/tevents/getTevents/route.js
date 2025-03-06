@@ -6,6 +6,16 @@ import { NextResponse } from "next/server";
 // tevents/getTevents/route.js
 export async function GET(request) {
   try {
+    const apiKey = request.headers.get("x-api-key");
+
+    // Validate API key
+    if (!apiKey || apiKey !== process.env.API_KEY) {
+      return Response.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const eventId = searchParams.get("eventId");
     await connectToDatabase();

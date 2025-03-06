@@ -1,7 +1,19 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import { TEvent } from "@/models/EventDetails";
 
-export async function GET() {
+export async function GET(request) {
+  const API_KEY = process.env.API_KEY; // Store API key in environment variable
+
+  const apiKey = request.headers.get("x-api-key");
+
+  // Validate API key
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return Response.json(
+      { success: false, error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
   await connectToDatabase();
 
   try {
