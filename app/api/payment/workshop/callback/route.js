@@ -231,11 +231,28 @@ export async function GET(req) {
 
     console.log("Before Transaction: ", transaction.status);
 
-    // Update the transaction status
-    transaction.status = paymentData.status === 1 ? "success" : "failed";
-    await transaction.save();
+    // // Update the transaction status
+    // transaction.status = paymentData.status === 1 ? "success" : "failed";
+    // await transaction.save();
 
-    console.log("After Transaction: ", transaction.status);
+    // console.log("After Transaction: ", transaction.status);
+
+    const updatedTransaction = await Transaction.findOneAndUpdate(
+      { transactionId: paymentData.transactionid },
+      { status: paymentData.status === 1 ? "success" : "failed" },
+      { new: true, runValidators: true }
+    );
+
+    console.log("After Transaction Update: ", updatedTransaction.status);
+
+    if (!updatedTransaction) {
+      console.error("Failed to update transaction");
+      return NextResponse.json(
+        { message: "Failed to update transaction" },
+        { status: 500 }
+      );
+    }
+
     console.log(
       "After Saving - Retrieval from paymentData: ",
       paymentData.status
@@ -271,7 +288,7 @@ export async function GET(req) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.API_KEY,
+          // "x-api-key": process.env.API_KEY,
         },
         body: JSON.stringify(registrationPayload),
       }
