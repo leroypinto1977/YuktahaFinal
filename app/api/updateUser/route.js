@@ -5,18 +5,6 @@ export async function POST(req) {
   try {
     const data = await req.json();
 
-    // const API_KEY = process.env.API_KEY; // Store API key in environment variable
-
-    // const apiKey = req.headers.get("x-api-key");
-
-    // // Validate API key
-    // if (!apiKey || apiKey !== process.env.API_KEY) {
-    //   return Response.json(
-    //     { success: false, error: "Unauthorized" },
-    //     { status: 401 }
-    //   );
-    // }
-
     console.log("Received data:", data);
 
     if (
