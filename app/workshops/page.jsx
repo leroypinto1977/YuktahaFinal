@@ -79,7 +79,7 @@ const Workshops = () => {
 
       if (
         !lastAnimationWorkshopTime ||
-        currentTime - parseInt(lastAnimationWorkshopTime) > 0
+        currentTime - parseInt(lastAnimationWorkshopTime) > 5000
       ) {
         setShouldAnimate(true);
         localStorage.setItem(

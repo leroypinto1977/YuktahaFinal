@@ -5,15 +5,15 @@ import Workshop from "@/models/WorkshopDetails";
 import { NextResponse } from "next/server";
 
 export async function POST(request, res) {
-  const apiKey = request.headers.get("x-api-key");
+  // const apiKey = request.headers.get("x-api-key");
 
-  // Validate API key
-  if (!apiKey || apiKey !== process.env.API_KEY) {
-    return Response.json(
-      { success: false, error: "Unauthorized" },
-      { status: 401 }
-    );
-  }
+  // // Validate API key
+  // if (!apiKey || apiKey !== process.env.API_KEY) {
+  //   return Response.json(
+  //     { success: false, error: "Unauthorized" },
+  //     { status: 401 }
+  //   );
+  // }
   try {
     await connectToDatabase();
 
@@ -126,7 +126,7 @@ export async function POST(request, res) {
     // Update transaction status
     const updatedTransaction = await Transaction.findOneAndUpdate(
       { transactionId },
-      { status: "completed" }, // Update transaction stage
+      { status: "success" }, // Update transaction stage
       { new: true }
     );
 
