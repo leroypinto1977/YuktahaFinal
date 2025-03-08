@@ -29,10 +29,10 @@ export async function POST(req) {
       auth: {
         type: "OAuth2",
         user: "yukta@psgitech.ac.in",
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refreshToken: process.env.REFRESH_TOKEN,
-        accessToken: process.env.ACCESS_TOKEN,
+        // clientId: process.env.CLIENT_ID,
+        // clientSecret: process.env.CLIENT_SECRET,
+        // refreshToken: process.env.REFRESH_TOKEN,
+        // accessToken: process.env.ACCESS_TOKEN,
       },
       tls: {
         rejectUnauthorized: false,
