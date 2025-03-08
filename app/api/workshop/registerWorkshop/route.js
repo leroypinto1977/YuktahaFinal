@@ -134,6 +134,20 @@ export async function POST(request, res) {
       throw new Error("Failed to update transaction document");
     }
 
+    await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/mail/send-workshop-email`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: userDetails.email,
+          userName: userDetails.firstName,
+          workshopName: workshop.name,
+          workshopId: workshopId,
+        }),
+      }
+    );
+
     return NextResponse.json(
       {
         message: "Workshop registered successfully",
