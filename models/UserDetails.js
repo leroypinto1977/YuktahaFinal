@@ -93,6 +93,7 @@ const EventItemSchema = new mongoose.Schema({
 const UserDetailsSchema = new mongoose.Schema(
   {
     k_id: { type: String, required: true },
+    userRole: { type: String, default: "user" },
     yuktahaId: { type: String, unique: true },
     yuktahaNumber: { type: Number, unique: true },
     firstName: { type: String, required: true },

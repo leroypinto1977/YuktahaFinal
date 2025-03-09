@@ -80,7 +80,7 @@ export async function POST(request, res) {
       yuktahId: userDetails.yuktahaId,
       eventType: "Workshop",
       eventId: workshopId,
-      transactionId: transactionid,
+      transactionId: transactionId,
       firstName: userDetails.firstName,
     };
 
