@@ -43,7 +43,7 @@
     "components/acertinity_ui/select.jsx",
     "components/acertinity_ui/bento-grid.jsx",
     "components/WorkshopGroups.jsx",
-    "middleware.js"
+    "middleware.ts"
   ],
   "exclude": ["node_modules"]
 }
